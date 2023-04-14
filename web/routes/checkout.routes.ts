@@ -7,26 +7,18 @@ const checkoutRouter = Router();
 checkoutRouter.get("/checkouts", async (req, res) => {
   try {
     const chekouts = await CheckoutService.getCheckoutList(res);
-    res.status(200).send({ chekouts });
+    const settings = await CheckoutService.getCheckoutSettings(
+      res,
+      chekouts[0].id
+    );
+    res.status(200).send({ chekouts, settings });
   } catch (error) {
     onError(error, res);
   }
 });
 
-checkoutRouter.post("/checkout/settings", async (req, res) => {
-  res.status(200).send({ route: "/checkout/settings" });
-});
-
-checkoutRouter.post("/checkout/settings/update", async (req, res) => {
-  res.status(200).send({ route: "/checkout/settings/update" });
-});
-
-checkoutRouter.post("/checkout/desing-system", async (req, res) => {
-  res.status(200).send({ route: "/checkout/desing-system" });
-});
-
-checkoutRouter.post("/checkout/desing-system/update", async (req, res) => {
-  res.status(200).send({ route: "/checkout/desing-system/update" });
+checkoutRouter.post("/checkouts", async (req, res) => {
+  res.status(200).send({ route: "/checkouts" });
 });
 
 export { checkoutRouter };
