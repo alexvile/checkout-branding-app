@@ -5,7 +5,7 @@ import shopify from "../utils/shopify.js";
 import {
   GET_CHECKOUT_LIST,
   GET_CHECKOUT_SETTINGS,
-} from "../queries/checkout.quries.js";
+} from "../queries/checkout.queries.js";
 
 export interface ICheckout {
   id: string;
