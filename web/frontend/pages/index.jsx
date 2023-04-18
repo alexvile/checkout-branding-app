@@ -181,7 +181,6 @@ export default function HomePage() {
     },
   };
 
-  //   customizations: {
   //     checkbox: {
   //       cornerRadius: "NONE",
   //     },
@@ -271,7 +270,7 @@ export default function HomePage() {
             </Card>
           )}
           <Card sectioned>
-            <Settings data={settings} />
+            <Settings data={settings} checkout={selected} />
           </Card>
         </Layout.Section>
       </Layout>
