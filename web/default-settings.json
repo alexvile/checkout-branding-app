@@ -1,7 +1,10 @@
 {
-  "checkoutBranding": {
+  "checkoutProfileId": "gid://shopify/CheckoutProfile/14385467",
+  "checkoutBrandingInput": {
     "customizations": {
-      "cornerRadius": "BASE",
+      "checkbox": {
+        "cornerRadius": "BASE"
+      },
       "control": {
         "border": "FULL",
         "color": "COLOR1",
@@ -9,10 +12,7 @@
         "labelPosition": "INSIDE"
       },
       "favicon": {
-        "image": {
-          "altText": "",
-          "url": ""
-        }
+        "mediaImageId": null
       },
       "global": {
         "cornerRadius": "NONE",
@@ -24,15 +24,11 @@
       "header": {
         "alignment": "START",
         "banner": {
-          "image": {
-            "altText": "",
-            "url": ""
-          }
+          "mediaImageId": null
         },
         "logo": {
           "image": {
-            "altText": "",
-            "url": ""
+            "mediaImageId": null
           },
           "maxWidth": null
         },
@@ -56,22 +52,16 @@
           "weight": "BOLD"
         }
       },
-      "headingLevel3": null,
+      "headingLevel3": {},
       "main": {
         "backgroundImage": {
-          "image": {
-            "altText": "",
-            "url": ""
-          }
+          "mediaImageId": null
         }
       },
-      "merchandiseThumbnail": null,
+      "merchandiseThumbnail": {},
       "orderSummary": {
         "backgroundImage": {
-          "image": {
-            "altText": "",
-            "url": ""
-          }
+          "mediaImageId": null
         }
       },
       "primaryButton": {
@@ -83,20 +73,20 @@
         "typography": {
           "font": "PRIMARY",
           "kerning": "BASE",
-          "weight": "BOLD",
           "letterCase": "NONE",
-          "size": "BASE"
+          "size": "LARGE",
+          "weight": "BOLD"
         }
       },
-      "secondaryButton": null,
+      "secondaryButton": {},
       "select": {
         "border": "FULL",
         "typography": {
           "font": "PRIMARY",
           "kerning": "BASE",
-          "weight": "BASE",
           "letterCase": "NONE",
-          "size": "BASE"
+          "size": "LARGE",
+          "weight": "BOLD"
         }
       },
       "textField": {
@@ -148,31 +138,7 @@
         "base": 5,
         "large": 10
       },
-      "typography": {
-        "primary": {
-          "base": {
-            "sources": null,
-            "weight": 400
-          },
-          "bold": {
-            "sources": null,
-            "weight": 700
-          },
-          "name": ""
-        },
-        "secondary": {
-          "base": {
-            "sources": null,
-            "weight": 400
-          },
-          "bold": {
-            "sources": null,
-            "weight": 700
-          },
-          "name": ""
-        },
-        "size": null
-      }
+      "typography": {}
     }
   }
 }
