@@ -251,27 +251,27 @@ export default function HomePage() {
       <TitleBar title="Checkout customizer" primaryAction={null} />
       <Layout>
         <Layout.Section>
-          {checkouts.length > 0 && (
-            <Card sectioned>
-              <Select
-                label="Choose checkout"
-                options={checkouts}
-                onChange={handleSelectChange}
-                value={selected}
-              />
+          <div>
+            {checkouts.length > 0 && (
+              <Card sectioned>
+                <Select
+                  label="Choose checkout"
+                  options={checkouts}
+                  onChange={handleSelectChange}
+                  value={selected}
+                />
 
-              <Button onClick={getCheckoutSettings}>
-                Get checkout settings
-              </Button>
+                <Button onClick={getCheckoutSettings}>
+                  Get checkout settings
+                </Button>
 
-              <Button onClick={setDefaultCheckoutSettings}>
-                SET DEFAULT (WARNING)
-              </Button>
-            </Card>
-          )}
-          <Card sectioned>
-            <Settings data={settings} checkout={selected} />
-          </Card>
+                <Button onClick={setDefaultCheckoutSettings}>
+                  SET DEFAULT (WARNING)
+                </Button>
+              </Card>
+            )}
+          </div>
+          <Settings data={settings} checkout={selected} />
         </Layout.Section>
       </Layout>
     </Page>

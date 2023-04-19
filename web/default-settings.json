@@ -74,8 +74,8 @@
           "font": "PRIMARY",
           "kerning": "BASE",
           "letterCase": "NONE",
-          "size": "LARGE",
-          "weight": "BOLD"
+          "size": "BASE",
+          "weight": "BASE"
         }
       },
       "secondaryButton": {},
@@ -85,8 +85,8 @@
           "font": "PRIMARY",
           "kerning": "BASE",
           "letterCase": "NONE",
-          "size": "LARGE",
-          "weight": "BOLD"
+          "size": "BASE",
+          "weight": "BASE"
         }
       },
       "textField": {
