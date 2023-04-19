@@ -1,9 +1,11 @@
 import { Select, Layout, Card, Heading } from "@shopify/polaris";
 import { useState, useEffect } from "react";
 import { useAuthenticatedFetch } from "../hooks";
+import { ColorInput } from "./ColorInput";
 
 export default function Settings({ data, checkout }) {
   const fetch = useAuthenticatedFetch();
+
   const cornerRadiusOptions = [
     { label: "Base", value: "BASE" },
     { label: "Large", value: "LARGE" },
@@ -127,6 +129,11 @@ export default function Settings({ data, checkout }) {
   const [textFieldTSize, setTextFieldTSize] = useState();
   const [textFieldTWeight, setTextFieldTWeight] = useState();
 
+  // Design System
+  const [canvasAccent, setCanvasAccent] = useState();
+  const [canvasBackground, setCanvasBackground] = useState();
+  const [canvasForeground, setCanvasForeground] = useState();
+
   const values = {
     customizations: {
       checkbox: {
@@ -231,9 +238,9 @@ export default function Settings({ data, checkout }) {
     designSystem: {
       colorPalette: {
         canvas: {
-          accent: "#1878b9",
-          background: "#ffffff",
-          foreground: null,
+          accent: canvasAccent,
+          background: canvasBackground,
+          foreground: canvasForeground,
         },
         color1: {
           accent: "#1878b9",
@@ -320,6 +327,10 @@ export default function Settings({ data, checkout }) {
       setTextFieldTLetterCase(customizations.textField.typography.letterCase);
       setTextFieldTSize(customizations.textField.typography.size);
       setTextFieldTWeight(customizations.textField.typography.weight);
+      // Design System
+      setCanvasAccent(designSystem.colorPalette.canvas.accent);
+      setCanvasBackground(designSystem.colorPalette.canvas.background);
+      setCanvasForeground(designSystem.colorPalette.canvas.foreground);
     }
   }, [data]);
 
@@ -634,7 +645,34 @@ export default function Settings({ data, checkout }) {
         </Layout.Section>
         <Layout.Section secondary>
           <Card title="DESIGN SYSTEM" sectioned>
-            <p>View a summary of your online store’s orders.</p>
+            {data?.checkoutBranding?.designSystem && (
+              <div>
+                <h2>Color palette</h2>
+                <Card title="Canvas" sectioned>
+                  <ColorInput
+                    label="Accent"
+                    size="large"
+                    name="canvasAccent"
+                    onChange={setCanvasAccent}
+                    value={canvasAccent}
+                  />
+                  <ColorInput
+                    label="Background"
+                    size="large"
+                    name="canvasBackground"
+                    onChange={setCanvasBackground}
+                    value={canvasBackground}
+                  />
+                  <ColorInput
+                    label="Foreground"
+                    size="large"
+                    name="canvasForeground"
+                    onChange={setCanvasForeground}
+                    value={canvasForeground}
+                  />
+                </Card>
+              </div>
+            )}
           </Card>
         </Layout.Section>
       </Layout>
