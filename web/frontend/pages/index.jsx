@@ -71,7 +71,7 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    setSelected(checkouts[0]?.value);
+    setSelected(checkouts[2]?.value);
   }, [checkouts]);
 
   useEffect(() => {
@@ -96,9 +96,15 @@ export default function HomePage() {
                   onChange={handleSelectChange}
                   value={selected}
                 />
-                <Button onClick={setDefaultCheckoutSettings} disabled={loading}>
-                  SET DEFAULT (WARNING)
-                </Button>
+                <div>
+                  <Button
+                    onClick={setDefaultCheckoutSettings}
+                    disabled={loading}
+                  >
+                    Set default
+                  </Button>
+                  (WARNING)
+                </div>
               </Card>
             )}
           </div>

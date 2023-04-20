@@ -298,6 +298,7 @@ export default function Settings({
     } else {
       const { customizations, designSystem } = data.checkoutBranding;
       console.log(designSystem);
+      console.log(customizations);
       seCheckboxCornerRadius(
         customizations.checkbox.cornerRadius ||
           DEFAULT_SETTINGS.customizations.checkbox.cornerRadius
@@ -352,7 +353,7 @@ export default function Settings({
       );
       setH1TLetterCase(
         customizations.headingLevel1.typography.letterCase ||
-          DEFAULT_SETTINGS.ustomizations.headingLevel1.typography.letterCase
+          DEFAULT_SETTINGS.customizations.headingLevel1.typography.letterCase
       );
       setH1TSize(
         customizations.headingLevel1.typography.size ||
