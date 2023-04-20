@@ -154,6 +154,7 @@ const GET_CHECKOUT_SETTINGS = `#graphql
   fragment imageFields on Image {
     altText
     url
+    id
   }
 
   fragment buttonFields on CheckoutBrandingButton {
@@ -349,6 +350,7 @@ const SET_CHECKOUT_SETTINGS = `#graphql
   fragment imageFields on Image {
     altText
     url
+    id
   }
 
   fragment fontGroupFields on CheckoutBrandingFontGroup {
