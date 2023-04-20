@@ -136,6 +136,25 @@ export const DEFAULT_SETTINGS = {
       base: 5,
       large: 10,
     },
-    typography: {},
+    typography: {
+      primary: {
+        shopifyFontGroup: {
+          baseWeight: 400,
+          boldWeight: 600,
+          name: "-apple-system",
+        },
+      },
+      secondary: {
+        shopifyFontGroup: {
+          baseWeight: 400,
+          boldWeight: 700,
+          name: "-apple-system",
+        },
+      },
+      size: {
+        base: 14.0,
+        ratio: 1.2,
+      },
+    },
   },
 };

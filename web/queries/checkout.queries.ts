@@ -178,6 +178,11 @@ const GET_CHECKOUT_SETTINGS = `#graphql
       sources
       weight
     }
+    bold {
+    sources
+    weight
+  }
+  name
   }
 `;
 

@@ -11,6 +11,8 @@ import { useAuthenticatedFetch } from "../hooks";
 import { ColorInput } from "./ColorInput";
 import { OPTIONS } from "../settings/options";
 import { DEFAULT_SETTINGS } from "../settings/default.settings";
+
+import { SHOPIFY_FONTS } from "../settings/fonts";
 export default function Settings({
   data,
   getCheckoutSettings,
@@ -116,6 +118,17 @@ export default function Settings({
   const [cornerRadiusIntBase, setCornerRadiusIntBase] = useState();
   const [cornerRadiusIntLarge, setCornerRadiusIntLarge] = useState();
   const [cornerRadiusIntSmall, setCornerRadiusIntSmall] = useState();
+
+  const [tPrimaryFont, setTPrimaryFont] = useState();
+  const [tPrimaryWeightBase, setTPrimaryWeightBase] = useState();
+  const [tPrimaryWeightBold, setTPrimaryWeightBold] = useState();
+
+  const [tSecondaryFont, setTSecondaryFont] = useState();
+  const [tSecondaryWeightBase, setTSecondaryWeightBase] = useState();
+  const [tSecondaryWeightBold, setTSecondaryWeightBold] = useState();
+
+  const [tSizeBase, setTSizeBase] = useState();
+  const [tSizeRatio, setTSizeRatio] = useState();
 
   const values = {
     customizations: {
@@ -256,16 +269,35 @@ export default function Settings({
         base: cornerRadiusIntBase,
         large: cornerRadiusIntLarge,
       },
-      typography: {},
+      typography: {
+        primary: {
+          shopifyFontGroup: {
+            baseWeight: tPrimaryWeightBase,
+            boldWeight: tPrimaryWeightBold,
+            name: tPrimaryFont,
+          },
+        },
+        secondary: {
+          shopifyFontGroup: {
+            baseWeight: tSecondaryWeightBase,
+            boldWeight: tSecondaryWeightBold,
+            name: tSecondaryFont,
+          },
+        },
+        size: {
+          base: tSizeBase,
+          ratio: tSizeRatio,
+        },
+      },
     },
   };
 
-  console.log(DEFAULT_SETTINGS);
   useEffect(() => {
     if (!data) {
       return;
     } else {
       const { customizations, designSystem } = data.checkoutBranding;
+      console.log(designSystem);
       seCheckboxCornerRadius(
         customizations.checkbox.cornerRadius ||
           DEFAULT_SETTINGS.customizations.checkbox.cornerRadius
@@ -528,6 +560,45 @@ export default function Settings({
         designSystem.cornerRadius.small ||
           DEFAULT_SETTINGS.designSystem.cornerRadius.small
       );
+
+      setTPrimaryFont(
+        designSystem.typography.primary?.name ||
+          DEFAULT_SETTINGS.designSystem.typography.primary.shopifyFontGroup.name
+      );
+      setTPrimaryWeightBase(
+        designSystem.typography.primary?.base?.weight ||
+          DEFAULT_SETTINGS.designSystem.typography.primary.shopifyFontGroup
+            .baseWeight
+      );
+      setTPrimaryWeightBold(
+        designSystem.typography.primary?.bold?.weight ||
+          DEFAULT_SETTINGS.designSystem.typography.primary.shopifyFontGroup
+            .boldWeight
+      );
+
+      setTSecondaryFont(
+        designSystem.typography?.secondary?.name ||
+          DEFAULT_SETTINGS.designSystem.typography.secondary.shopifyFontGroup
+            .name
+      );
+      setTSecondaryWeightBase(
+        designSystem.typography?.secondary?.base?.weight ||
+          DEFAULT_SETTINGS.designSystem.typography.secondary.shopifyFontGroup
+            .baseWeight
+      );
+      setTSecondaryWeightBold(
+        designSystem.typography?.secondary?.bold?.weight ||
+          DEFAULT_SETTINGS.designSystem.typography.secondary.shopifyFontGroup
+            .boldWeight
+      );
+      setTSizeBase(
+        designSystem.typography?.size?.base ||
+          DEFAULT_SETTINGS.designSystem.typography.size.base
+      );
+      setTSizeRatio(
+        designSystem.typography?.size?.ratio ||
+          DEFAULT_SETTINGS.designSystem.typography.size.ratio
+      );
     }
   }, [data]);
 
@@ -545,7 +616,7 @@ export default function Settings({
     if (res.ok) {
       getCheckoutSettings();
       setLoading(false);
-      console.log(json);
+      console.log("res", json);
     } else {
       setLoading(false);
       console.log(json);
@@ -606,6 +677,7 @@ export default function Settings({
                     onChange={(value) => setGlobalCornerRadius(value)}
                     value={globalCornerRadius}
                   />
+
                   <Card title="Typography" sectioned>
                     <Select
                       label="Kerning"
@@ -1027,6 +1099,107 @@ export default function Settings({
                       setCornerRadiusIntSmall(value);
                     }}
                   />
+                </Card>
+                <Card title="Typography" sectioned>
+                  <p>
+                    Not all fonts have all weights, so after selecting, the
+                    closest font weights will be selected and change value at
+                    your select.
+                  </p>
+                  <Card title="Primary" sectioned>
+                    <Select
+                      label="Base (font)"
+                      options={SHOPIFY_FONTS}
+                      onChange={(value) => {
+                        setTPrimaryFont(value);
+                      }}
+                      value={tPrimaryFont}
+                    />
+                    <RangeSlider
+                      output
+                      label="Base Weight"
+                      min={100}
+                      max={900}
+                      step={100}
+                      suffix={tPrimaryWeightBase}
+                      value={tPrimaryWeightBase || 0}
+                      onChange={(value) => {
+                        setTPrimaryWeightBase(value);
+                      }}
+                    />
+                    <RangeSlider
+                      output
+                      label="Bold Weight"
+                      min={100}
+                      max={900}
+                      step={100}
+                      suffix={tPrimaryWeightBold}
+                      value={tPrimaryWeightBold || 0}
+                      onChange={(value) => {
+                        setTPrimaryWeightBold(value);
+                      }}
+                    />
+                  </Card>
+                  <Card title="Secondary" sectioned>
+                    <Select
+                      label="Base (font)"
+                      options={SHOPIFY_FONTS}
+                      onChange={(value) => {
+                        setTSecondaryFont(value);
+                      }}
+                      value={tSecondaryFont}
+                    />
+                    <RangeSlider
+                      output
+                      label="Base Weight"
+                      min={100}
+                      max={900}
+                      step={100}
+                      suffix={tSecondaryWeightBase}
+                      value={tSecondaryWeightBase || 0}
+                      onChange={(value) => {
+                        setTSecondaryWeightBase(value);
+                      }}
+                    />
+                    <RangeSlider
+                      output
+                      label="Bold Weight"
+                      min={100}
+                      max={900}
+                      step={100}
+                      suffix={tSecondaryWeightBold}
+                      value={tSecondaryWeightBold || 0}
+                      onChange={(value) => {
+                        setTSecondaryWeightBold(value);
+                      }}
+                    />
+                  </Card>
+                  <Card title="Size">
+                    <RangeSlider
+                      output
+                      label="Base "
+                      min={12.0}
+                      max={18.0}
+                      step={0.1}
+                      suffix={tSizeBase}
+                      value={tSizeBase || 0}
+                      onChange={(value) => {
+                        setTSizeBase(value);
+                      }}
+                    />
+                    <RangeSlider
+                      output
+                      label="Ratio"
+                      min={1.0}
+                      max={1.4}
+                      step={0.1}
+                      suffix={tSizeRatio}
+                      value={tSizeRatio || 0}
+                      onChange={(value) => {
+                        setTSizeRatio(value);
+                      }}
+                    />
+                  </Card>
                 </Card>
               </div>
             )}
