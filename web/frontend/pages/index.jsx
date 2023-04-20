@@ -1,12 +1,14 @@
-import { Card, Page, Layout, Button } from "@shopify/polaris";
+import { Card, Page, Layout, Button, Spinner } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useAuthenticatedFetch } from "../hooks";
 import { Select } from "@shopify/polaris";
 import { useState, useCallback, useEffect } from "react";
 import Settings from "../components/Settings";
+import { DEFAULT_SETTINGS } from "../settings/default.settings";
 
 export default function HomePage() {
   const fetch = useAuthenticatedFetch();
+  const [loading, setLoading] = useState(false);
 
   const [settings, setSettings] = useState();
   const [checkouts, setCheckouts] = useState([]);
@@ -14,6 +16,7 @@ export default function HomePage() {
   const handleSelectChange = useCallback((value) => setSelected(value), []);
 
   const getCheckouts = async () => {
+    setLoading(true);
     const res = await fetch("/api/checkouts");
     const json = await res.json();
     if (res.ok) {
@@ -22,221 +25,44 @@ export default function HomePage() {
         value: id,
       }));
       setCheckouts(checkoutOptions);
-      // console.log(json);
+      setLoading(false);
     } else {
-      console.log(json);
+      console.log("error", json);
+      setLoading(false);
     }
   };
 
   const getCheckoutSettings = async () => {
+    setLoading(true);
     const checkoutID = selected.split("/CheckoutProfile/")[1];
     const res = await fetch(`/api/checkout-settings/${checkoutID}`);
     const json = await res.json();
     if (res.ok) {
       setSettings(json.settings.data);
-      console.log("see", json.settings.data);
+      setLoading(false);
     } else {
-      console.log(json);
+      setLoading(false);
+      console.log("error", json);
     }
   };
 
-  const defaultValues = {
-    customizations: {
-      checkbox: {
-        cornerRadius: "BASE",
-      },
-      control: {
-        border: "FULL",
-        color: "COLOR1",
-        cornerRadius: "BASE",
-        labelPosition: "INSIDE",
-      },
-      favicon: {
-        mediaImageId: null,
-      },
-      global: {
-        cornerRadius: "NONE",
-        typography: {
-          kerning: "BASE",
-          letterCase: "NONE",
-        },
-      },
-      header: {
-        alignment: "START",
-        banner: {
-          mediaImageId: null,
-        },
-        logo: {
-          image: {
-            mediaImageId: null,
-          },
-          maxWidth: null,
-        },
-        position: "INLINE",
-      },
-      headingLevel1: {
-        typography: {
-          font: "PRIMARY",
-          kerning: "BASE",
-          letterCase: "NONE",
-          size: "LARGE",
-          weight: "BOLD",
-        },
-      },
-      headingLevel2: {
-        typography: {
-          font: "PRIMARY",
-          kerning: "BASE",
-          letterCase: "NONE",
-          size: "LARGE",
-          weight: "BOLD",
-        },
-      },
-      headingLevel3: {},
-      main: {
-        backgroundImage: {
-          mediaImageId: null,
-        },
-      },
-      merchandiseThumbnail: {},
-      orderSummary: {
-        backgroundImage: {
-          mediaImageId: null,
-        },
-      },
-      primaryButton: {
-        background: "SOLID",
-        blockPadding: "BASE",
-        border: "NONE",
-        cornerRadius: "BASE",
-        inlinePadding: "BASE",
-        typography: {
-          font: "PRIMARY",
-          kerning: "BASE",
-          letterCase: "NONE",
-          size: "BASE",
-          weight: "BASE",
-        },
-      },
-      secondaryButton: {},
-      select: {
-        border: "FULL",
-        typography: {
-          font: "PRIMARY",
-          kerning: "BASE",
-          letterCase: "NONE",
-          size: "BASE",
-          weight: "BASE",
-        },
-      },
-      textField: {
-        border: "FULL",
-        typography: {
-          font: "PRIMARY",
-          kerning: "BASE",
-          weight: "BASE",
-          letterCase: "NONE",
-          size: "BASE",
-        },
-      },
-    },
-    designSystem: {
-      colorPalette: {
-        canvas: {
-          accent: "#1878b9",
-          background: "#ffffff",
-          foreground: null,
-        },
-        color1: {
-          accent: "#1878b9",
-          background: "#ffffff",
-          foreground: "#000000",
-        },
-        color2: {
-          accent: "#1878b9",
-          background: "#fafafa",
-          foreground: "#000000",
-        },
-        critical: {
-          accent: "#f55353",
-          background: null,
-          foreground: null,
-        },
-        interactive: {
-          accent: null,
-          background: null,
-          foreground: "#1878b9",
-        },
-        primary: {
-          accent: null,
-          background: "#1878b9",
-          foreground: "#ffffff",
-        },
-      },
-      cornerRadius: {
-        small: 2,
-        base: 5,
-        large: 10,
-      },
-      typography: {},
-    },
-  };
-
-  //     checkbox: {
-  //       cornerRadius: "NONE",
-  //     },
-  //   },
-  //   designSystem: {
-  //     colorPalette: {
-  //       canvas: {
-  //         accent: "#1f9",
-  //         background: "#ffffff",
-  //         foreground: null,
-  //       },
-  //       color1: {
-  //         accent: "#1f9",
-  //         background: "#ffffff",
-  //         foreground: "#000000",
-  //       },
-  //       color2: {
-  //         accent: "#1f9",
-  //         background: "#fafafa",
-  //         foreground: "#000000",
-  //       },
-  //       critical: {
-  //         accent: "#f55353",
-  //         background: null,
-  //         foreground: null,
-  //       },
-  //       interactive: {
-  //         accent: null,
-  //         background: null,
-  //         foreground: "#1f9",
-  //       },
-  //       primary: {
-  //         accent: null,
-  //         background: "#1f9",
-  //         foreground: "#ffffff",
-  //       },
-  //     },
-  //   },
-  // };
-
   const setDefaultCheckoutSettings = async () => {
+    setLoading(true);
     const checkoutID = selected.split("/CheckoutProfile/")[1];
     const res = await fetch(`/api/checkout-settings/${checkoutID}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(defaultValues),
+      body: JSON.stringify(DEFAULT_SETTINGS),
     });
     const json = await res.json();
     if (res.ok) {
-      console.log("set", json.updatedSettings.data.checkoutBrandingUpsert);
       setSettings(json.updatedSettings.data.checkoutBrandingUpsert);
+      setLoading(false);
     } else {
-      console.log(json);
+      console.log("error", json);
+      setLoading(false);
     }
   };
 
@@ -248,26 +74,29 @@ export default function HomePage() {
     setSelected(checkouts[0]?.value);
   }, [checkouts]);
 
+  useEffect(() => {
+    if (selected) {
+      getCheckoutSettings();
+    }
+  }, [selected]);
+
   return (
     <Page>
       <TitleBar title="Checkout customizer" primaryAction={null} />
       <Layout>
         <Layout.Section>
           <div>
+            {loading && <Spinner />}
             {checkouts.length > 0 && (
               <Card sectioned>
                 <Select
+                  disabled={loading}
                   label="Choose checkout"
                   options={checkouts}
                   onChange={handleSelectChange}
                   value={selected}
                 />
-
-                <Button onClick={getCheckoutSettings}>
-                  Get checkout settings
-                </Button>
-
-                <Button onClick={setDefaultCheckoutSettings}>
+                <Button onClick={setDefaultCheckoutSettings} disabled={loading}>
                   SET DEFAULT (WARNING)
                 </Button>
               </Card>
@@ -276,6 +105,8 @@ export default function HomePage() {
           <Settings
             data={settings}
             getCheckoutSettings={getCheckoutSettings}
+            loading={loading}
+            setLoading={setLoading}
             checkout={selected}
           />
         </Layout.Section>

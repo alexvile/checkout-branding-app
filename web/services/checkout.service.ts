@@ -59,9 +59,6 @@ export class CheckoutService {
     checkoutProfileId: string,
     incomingData: any
   ) {
-    console.log(checkoutProfileId);
-    console.log(incomingData);
-
     const client = CheckoutService.getClient(res);
     const { body } = await client.query({
       data: {
