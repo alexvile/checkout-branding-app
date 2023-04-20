@@ -1,4 +1,4 @@
-import { Select, Layout, Card, Heading } from "@shopify/polaris";
+import { Select, Layout, Card, Heading, RangeSlider } from "@shopify/polaris";
 import { useState, useEffect } from "react";
 import { useAuthenticatedFetch } from "../hooks";
 import { ColorInput } from "./ColorInput";
@@ -134,6 +134,30 @@ export default function Settings({ data, checkout }) {
   const [canvasBackground, setCanvasBackground] = useState();
   const [canvasForeground, setCanvasForeground] = useState();
 
+  const [color1Accent, setColor1Accent] = useState();
+  const [color1Background, setColor1Background] = useState();
+  const [color1Foreground, setColor1Foreground] = useState();
+
+  const [color2Accent, setColor2Accent] = useState();
+  const [color2Background, setColor2Background] = useState();
+  const [color2Foreground, setColor2Foreground] = useState();
+
+  const [criticalAccent, setCriticalAccent] = useState();
+  const [criticalBackground, setCriticalBackground] = useState();
+  const [criticalForeground, setCriticalForeground] = useState();
+
+  const [interactiveAccent, setInteractiveAccent] = useState();
+  const [interactiveBackground, setInteractiveBackground] = useState();
+  const [interactiveForeground, setInteractiveForeground] = useState();
+
+  const [primaryAccent, setPrimaryAccent] = useState();
+  const [primaryBackground, setPrimaryBackground] = useState();
+  const [primaryForeground, setPrimaryForeground] = useState();
+
+  const [cornerRadiusIntBase, setCornerRadiusIntBase] = useState();
+  const [cornerRadiusIntLarge, setCornerRadiusIntLarge] = useState();
+  const [cornerRadiusIntSmall, setCornerRadiusIntSmall] = useState();
+
   const values = {
     customizations: {
       checkbox: {
@@ -243,35 +267,35 @@ export default function Settings({ data, checkout }) {
           foreground: canvasForeground,
         },
         color1: {
-          accent: "#1878b9",
-          background: "#ffffff",
-          foreground: "#000000",
+          accent: color1Accent,
+          background: color1Background,
+          foreground: color1Foreground,
         },
         color2: {
-          accent: "#1878b9",
-          background: "#fafafa",
-          foreground: "#000000",
+          accent: color2Accent,
+          background: color2Background,
+          foreground: color2Foreground,
         },
         critical: {
-          accent: "#f55353",
-          background: null,
-          foreground: null,
+          accent: criticalAccent,
+          background: criticalBackground,
+          foreground: criticalForeground,
         },
         interactive: {
-          accent: null,
-          background: null,
-          foreground: "#1878b9",
+          accent: interactiveAccent,
+          background: interactiveBackground,
+          foreground: interactiveForeground,
         },
         primary: {
-          accent: null,
-          background: "#1878b9",
-          foreground: "#ffffff",
+          accent: primaryAccent,
+          background: primaryBackground,
+          foreground: primaryForeground,
         },
       },
       cornerRadius: {
-        small: 2,
-        base: 5,
-        large: 10,
+        small: cornerRadiusIntSmall,
+        base: cornerRadiusIntBase,
+        large: cornerRadiusIntLarge,
       },
       typography: {},
     },
@@ -331,6 +355,29 @@ export default function Settings({ data, checkout }) {
       setCanvasAccent(designSystem.colorPalette.canvas.accent);
       setCanvasBackground(designSystem.colorPalette.canvas.background);
       setCanvasForeground(designSystem.colorPalette.canvas.foreground);
+
+      setColor1Accent(designSystem.colorPalette.color1.accent);
+      setColor1Background(designSystem.colorPalette.color1.background);
+      setColor1Foreground(designSystem.colorPalette.color1.foreground);
+      setColor2Accent(designSystem.colorPalette.color2.accent);
+      setColor2Background(designSystem.colorPalette.color2.background);
+      setColor2Foreground(designSystem.colorPalette.color2.foreground);
+      setCriticalAccent(designSystem.colorPalette.critical.accent);
+      setCriticalBackground(designSystem.colorPalette.critical.background);
+      setCriticalForeground(designSystem.colorPalette.critical.foreground);
+      setInteractiveAccent(designSystem.colorPalette.interactive.accent);
+      setInteractiveBackground(
+        designSystem.colorPalette.interactive.background
+      );
+      setInteractiveForeground(
+        designSystem.colorPalette.interactive.foreground
+      );
+      setPrimaryAccent(designSystem.colorPalette.primary.accent);
+      setPrimaryBackground(designSystem.colorPalette.primary.background);
+      setPrimaryForeground(designSystem.colorPalette.primary.foreground);
+      setCornerRadiusIntBase(designSystem.cornerRadius.base);
+      setCornerRadiusIntLarge(designSystem.cornerRadius.large);
+      setCornerRadiusIntSmall(designSystem.cornerRadius.small);
     }
   }, [data]);
 
@@ -354,6 +401,10 @@ export default function Settings({ data, checkout }) {
   return (
     <>
       <Heading>Settings</Heading>
+      {data?.checkoutBranding && (
+        <button onClick={setCheckoutSettings}>Send</button>
+      )}
+
       <Layout>
         <Layout.Section>
           <Card title="CUSTOMIZATIONS" sectioned>
@@ -647,7 +698,7 @@ export default function Settings({ data, checkout }) {
           <Card title="DESIGN SYSTEM" sectioned>
             {data?.checkoutBranding?.designSystem && (
               <div>
-                <h2>Color palette</h2>
+                <Heading>Color palette</Heading>
                 <Card title="Canvas" sectioned>
                   <ColorInput
                     label="Accent"
@@ -671,12 +722,162 @@ export default function Settings({ data, checkout }) {
                     value={canvasForeground}
                   />
                 </Card>
+                <Card title="Color 1" sectioned>
+                  <ColorInput
+                    label="Accent"
+                    size="large"
+                    name="color1Accent"
+                    onChange={setColor1Accent}
+                    value={color1Accent}
+                  />
+                  <ColorInput
+                    label="Background"
+                    size="large"
+                    name="color1Background"
+                    onChange={setColor1Background}
+                    value={color1Background}
+                  />
+                  <ColorInput
+                    label="Foreground"
+                    size="large"
+                    name="color1Foreground"
+                    onChange={setColor1Foreground}
+                    value={color1Foreground}
+                  />
+                </Card>
+                <Card title="Color 2" sectioned>
+                  <ColorInput
+                    label="Accent"
+                    size="large"
+                    name="color2Accent"
+                    onChange={setColor2Accent}
+                    value={color2Accent}
+                  />
+                  <ColorInput
+                    label="Background"
+                    size="large"
+                    name="color2Background"
+                    onChange={setColor2Background}
+                    value={color2Background}
+                  />
+                  <ColorInput
+                    label="Foreground"
+                    size="large"
+                    name="color2Foreground"
+                    onChange={setColor2Foreground}
+                    value={color2Foreground}
+                  />
+                </Card>
+                <Card title="Critical" sectioned>
+                  <ColorInput
+                    label="Accent"
+                    size="large"
+                    name="criticalAccent"
+                    onChange={setCriticalAccent}
+                    value={criticalAccent}
+                  />
+                  <ColorInput
+                    label="Background"
+                    size="large"
+                    name="criticalBackground"
+                    onChange={setCriticalBackground}
+                    value={criticalBackground}
+                  />
+                  <ColorInput
+                    label="Foreground"
+                    size="large"
+                    name="criticalForeground"
+                    onChange={setCriticalForeground}
+                    value={criticalForeground}
+                  />
+                </Card>
+                <Card title="Interactive" sectioned>
+                  <ColorInput
+                    label="Accent"
+                    size="large"
+                    name="interactiveAccent"
+                    onChange={setInteractiveAccent}
+                    value={interactiveAccent}
+                  />
+                  <ColorInput
+                    label="Background"
+                    size="large"
+                    name="interactiveBackground"
+                    onChange={setInteractiveBackground}
+                    value={interactiveBackground}
+                  />
+                  <ColorInput
+                    label="Foreground"
+                    size="large"
+                    name="interactiveForeground"
+                    onChange={setInteractiveForeground}
+                    value={interactiveForeground}
+                  />
+                </Card>
+                <Card title="Primary" sectioned>
+                  <ColorInput
+                    label="Accent"
+                    size="large"
+                    name="primaryAccent"
+                    onChange={setPrimaryAccent}
+                    value={primaryAccent}
+                  />
+                  <ColorInput
+                    label="Background"
+                    size="large"
+                    name="primaryBackground"
+                    onChange={setPrimaryBackground}
+                    value={primaryBackground}
+                  />
+                  <ColorInput
+                    label="Foreground"
+                    size="large"
+                    name="primaryForeground"
+                    onChange={setPrimaryForeground}
+                    value={primaryForeground}
+                  />
+                </Card>
+                <Heading>Corner Radius</Heading>
+                <Card title="Corner radius values" sectioned>
+                  <RangeSlider
+                    output
+                    label="Base"
+                    min={0}
+                    max={30}
+                    suffix={cornerRadiusIntBase}
+                    value={cornerRadiusIntBase || 0}
+                    onChange={(value) => {
+                      setCornerRadiusIntBase(value);
+                    }}
+                  />
+                  <RangeSlider
+                    output
+                    label="Large"
+                    min={0}
+                    max={30}
+                    suffix={cornerRadiusIntLarge}
+                    value={cornerRadiusIntLarge || 0}
+                    onChange={(value) => {
+                      setCornerRadiusIntLarge(value);
+                    }}
+                  />
+                  <RangeSlider
+                    output
+                    label="Small"
+                    min={0}
+                    max={30}
+                    suffix={cornerRadiusIntSmall}
+                    value={cornerRadiusIntSmall || 0}
+                    onChange={(value) => {
+                      setCornerRadiusIntSmall(value);
+                    }}
+                  />
+                </Card>
               </div>
             )}
           </Card>
         </Layout.Section>
       </Layout>
-      <button onClick={setCheckoutSettings}>Send</button>
     </>
   );
 }

@@ -9,7 +9,6 @@ export default function HomePage() {
   const fetch = useAuthenticatedFetch();
 
   const [settings, setSettings] = useState();
-
   const [checkouts, setCheckouts] = useState([]);
   const [selected, setSelected] = useState();
   const handleSelectChange = useCallback((value) => setSelected(value), []);
@@ -23,6 +22,7 @@ export default function HomePage() {
         value: id,
       }));
       setCheckouts(checkoutOptions);
+      // console.log(json);
     } else {
       console.log(json);
     }
@@ -34,6 +34,7 @@ export default function HomePage() {
     const json = await res.json();
     if (res.ok) {
       setSettings(json.settings.data);
+      console.log("see", json.settings.data);
     } else {
       console.log(json);
     }
@@ -113,8 +114,8 @@ export default function HomePage() {
           font: "PRIMARY",
           kerning: "BASE",
           letterCase: "NONE",
-          size: "LARGE",
-          weight: "BOLD",
+          size: "BASE",
+          weight: "BASE",
         },
       },
       secondaryButton: {},
@@ -124,8 +125,8 @@ export default function HomePage() {
           font: "PRIMARY",
           kerning: "BASE",
           letterCase: "NONE",
-          size: "LARGE",
-          weight: "BOLD",
+          size: "BASE",
+          weight: "BASE",
         },
       },
       textField: {
@@ -232,7 +233,8 @@ export default function HomePage() {
     });
     const json = await res.json();
     if (res.ok) {
-      console.log(json);
+      console.log("set", json.updatedSettings.data.checkoutBrandingUpsert);
+      setSettings(json.updatedSettings.data.checkoutBrandingUpsert);
     } else {
       console.log(json);
     }
