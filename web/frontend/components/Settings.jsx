@@ -1,81 +1,40 @@
-import { Select, Layout, Card, Heading, RangeSlider } from "@shopify/polaris";
+import {
+  Select,
+  Layout,
+  Card,
+  Heading,
+  RangeSlider,
+  Button,
+} from "@shopify/polaris";
 import { useState, useEffect } from "react";
 import { useAuthenticatedFetch } from "../hooks";
 import { ColorInput } from "./ColorInput";
+import { OPTIONS } from "../settings/options";
+import { DEFAULT_SETTINGS } from "../settings/default.settings";
+export default function Settings({
+  data,
+  getCheckoutSettings,
+  checkout,
+  loading,
+  setLoading,
+}) {
+  const {
+    cornerRadiusOptions,
+    borderOptions,
+    colorOptions,
+    labelPositionOptions,
+    kerningOptions,
+    letterCaseOptions,
+    alignmentOptions,
+    positionOptions,
+    fontTypeOptions,
+    fontSizeOptions,
+    fontWeightOptions,
+    backgroundOptions,
+    paddingOptions,
+  } = OPTIONS;
 
-export default function Settings({ data, getCheckoutSettings, checkout }) {
   const fetch = useAuthenticatedFetch();
-
-  const cornerRadiusOptions = [
-    { label: "Base", value: "BASE" },
-    { label: "Large", value: "LARGE" },
-    { label: "Small", value: "SMALL" },
-    { label: "None", value: "NONE" },
-  ];
-  const borderOptions = [
-    { label: "Full", value: "FULL" },
-    { label: "None", value: "NONE" },
-  ];
-  const colorOptions = [
-    { label: "Color1", value: "COLOR1" },
-    { label: "Color2", value: "COLOR2" },
-    { label: "Transparent", value: "TRANSPARENT" },
-  ];
-  const labelPositionOptions = [
-    { label: "Inside", value: "INSIDE" },
-    { label: "Outside", value: "OUTSIDE" },
-  ];
-  const kerningOptions = [
-    { label: "Base", value: "BASE" },
-    { label: "Extra loose", value: "EXTRA_LOOSE" },
-    { label: "Loose", value: "LOOSE" },
-  ];
-  const letterCaseOptions = [
-    { label: "Lower", value: "LOWER" },
-    { label: "None", value: "NONE" },
-    { label: "Title", value: "TITLE" },
-    { label: "Upper", value: "UPPER" },
-  ];
-  const alignmentOptions = [
-    { label: "Start", value: "START" },
-    { label: "Center", value: "CENTER" },
-    { label: "End", value: "END" },
-  ];
-  const positionOptions = [
-    { label: "Inline", value: "INLINE" },
-    { label: "Inline secondary", value: "INLINE_SECONDARY" },
-    { label: "Start", value: "START" },
-  ];
-  const fontTypeOptions = [
-    { label: "Primary", value: "PRIMARY" },
-    { label: "Secondary", value: "SECONDARY" },
-  ];
-  const fontSizeOptions = [
-    { label: "XXL", value: "EXTRA_EXTRA_LARGE" },
-    { label: "XL", value: "EXTRA_LARGE" },
-    { label: "L", value: "LARGE" },
-    { label: "Base", value: "BASE" },
-    { label: "M", value: "MEDIUM" },
-    { label: "S", value: "SMALL" },
-    { label: "XS", value: "EXTRA_SMALL" },
-  ];
-  const fontWeightOptions = [
-    { label: "Base", value: "BASE" },
-    { label: "Bold", value: "BOLD" },
-  ];
-  const backgroundOptions = [
-    { label: "None", value: "NONE" },
-    { label: "Solid", value: "SOLID" },
-  ];
-  const paddingOptions = [
-    { label: "Base", value: "BASE" },
-    { label: "Extra loose", value: "EXTRA_LOOSE" },
-    { label: "Extra tight", value: "EXTRA_TIGHT" },
-    { label: "Loose", value: "LOOSE" },
-    { label: "None", value: "NONE" },
-    { label: "Tight", value: "TIGHT" },
-  ];
-
   const [checkboxCornerRadius, seCheckboxCornerRadius] = useState();
 
   const [controlBorder, setControlBorder] = useState();
@@ -301,87 +260,279 @@ export default function Settings({ data, getCheckoutSettings, checkout }) {
     },
   };
 
+  console.log(DEFAULT_SETTINGS);
   useEffect(() => {
     if (!data) {
       return;
     } else {
       const { customizations, designSystem } = data.checkoutBranding;
-      console.log(designSystem);
-      seCheckboxCornerRadius(customizations.checkbox.cornerRadius);
-      setControlBorder(customizations.control.border);
-      setControlColor(customizations.control.color);
-      setControlCornerRadius(customizations.control.cornerRadius);
-      setLabelPosition(customizations.control.labelPosition);
-      setGlobalCornerRadius(customizations.global.cornerRadius);
-      setGlobalTKerning(customizations.global.typography.kerning);
-      setGlobalTLetterCase(customizations.global.typography.letterCase);
-      setHeaderAlignment(customizations.header.alignment);
-      setHeaderPosition(customizations.header.position);
-      setH1TFont(customizations.headingLevel1.typography.font);
-      setH1TKerning(customizations.headingLevel1.typography.kerning);
-      setH1TLetterCase(customizations.headingLevel1.typography.letterCase);
-      setH1TLetterCase(customizations.headingLevel1.typography.letterCase);
-      setH1TSize(customizations.headingLevel1.typography.size);
-      setH1TWeight(customizations.headingLevel1.typography.weight);
-      setH2TFont(customizations.headingLevel2.typography.font);
-      setH2TKerning(customizations.headingLevel2.typography.kerning);
-      setH2TLetterCase(customizations.headingLevel2.typography.letterCase);
-      setH2TLetterCase(customizations.headingLevel2.typography.letterCase);
-      setH2TSize(customizations.headingLevel2.typography.size);
-      setH2TWeight(customizations.headingLevel2.typography.weight);
-      setPBtnBG(customizations.primaryButton.background);
-      setPBtnBlockPadding(customizations.primaryButton.blockPadding);
-      setPBtnBorder(customizations.primaryButton.border);
-      setPBtnCornerRadius(customizations.primaryButton.cornerRadius);
-      setPBtnInlinePadding(customizations.primaryButton.inlinePadding);
-      setPBtnTFont(customizations.primaryButton.typography.font);
-      setPBtnTKerning(customizations.primaryButton.typography.kerning);
-      setPBtnTLetterCase(customizations.primaryButton.typography.letterCase);
-      setPBtnTSize(customizations.primaryButton.typography.size);
-      setPBtnTWeight(customizations.primaryButton.typography.weight);
-      setSelectBorder(customizations.select.border);
-      setSelectTFont(customizations.select.typography.font);
-      setSelectTKerning(customizations.select.typography.kerning);
-      setSelectTLetterCase(customizations.select.typography.letterCase);
-      setSelectTSize(customizations.select.typography.size);
-      setSelectTWeight(customizations.select.typography.weight);
-      setTextFieldBorder(customizations.textField.border);
-      setTextFieldTFont(customizations.textField.typography.font);
-      setTextFieldTKerning(customizations.textField.typography.kerning);
-      setTextFieldTLetterCase(customizations.textField.typography.letterCase);
-      setTextFieldTSize(customizations.textField.typography.size);
-      setTextFieldTWeight(customizations.textField.typography.weight);
+      seCheckboxCornerRadius(
+        customizations.checkbox.cornerRadius ||
+          DEFAULT_SETTINGS.customizations.checkbox.cornerRadius
+      );
+      setControlBorder(
+        customizations.control.border ||
+          DEFAULT_SETTINGS.customizations.control.border
+      );
+      setControlColor(
+        customizations.control.color ||
+          DEFAULT_SETTINGS.customizations.control.color
+      );
+      setControlCornerRadius(
+        customizations.control.cornerRadius ||
+          DEFAULT_SETTINGS.customizations.control.cornerRadius
+      );
+      setLabelPosition(
+        customizations.control.labelPosition ||
+          DEFAULT_SETTINGS.customizations.control.labelPosition
+      );
+      setGlobalCornerRadius(
+        customizations.global.cornerRadius ||
+          DEFAULT_SETTINGS.customizations.global.cornerRadius
+      );
+      setGlobalTKerning(
+        customizations.global.typography.kerning ||
+          DEFAULT_SETTINGS.customizations.global.typography.kerning
+      );
+      setGlobalTLetterCase(
+        customizations.global.typography.letterCase ||
+          DEFAULT_SETTINGS.customizations.global.typography.letterCase
+      );
+      setHeaderAlignment(
+        customizations.header.alignment ||
+          DEFAULT_SETTINGS.customizations.header.alignment
+      );
+      setHeaderPosition(
+        customizations.header.position ||
+          DEFAULT_SETTINGS.customizations.header.position
+      );
+      setH1TFont(
+        customizations.headingLevel1.typography.font ||
+          DEFAULT_SETTINGS.customizations.headingLevel1.typography.font
+      );
+      setH1TKerning(
+        customizations.headingLevel1.typography.kerning ||
+          DEFAULT_SETTINGS.customizations.headingLevel1.typography.kerning
+      );
+      setH1TLetterCase(
+        customizations.headingLevel1.typography.letterCase ||
+          DEFAULT_SETTINGS.customizations.headingLevel1.typography.letterCase
+      );
+      setH1TLetterCase(
+        customizations.headingLevel1.typography.letterCase ||
+          DEFAULT_SETTINGS.ustomizations.headingLevel1.typography.letterCase
+      );
+      setH1TSize(
+        customizations.headingLevel1.typography.size ||
+          DEFAULT_SETTINGS.customizations.headingLevel1.typography.size
+      );
+      setH1TWeight(
+        customizations.headingLevel1.typography.weight ||
+          DEFAULT_SETTINGS.customizations.headingLevel1.typography.weight
+      );
+      setH2TFont(
+        customizations.headingLevel2.typography.font ||
+          DEFAULT_SETTINGS.customizations.headingLevel2.typography.font
+      );
+      setH2TKerning(
+        customizations.headingLevel2.typography.kerning ||
+          DEFAULT_SETTINGS.customizations.headingLevel2.typography.kerning
+      );
+      setH2TLetterCase(
+        customizations.headingLevel2.typography.letterCase ||
+          DEFAULT_SETTINGS.customizations.headingLevel2.typography.letterCase
+      );
+      setH2TLetterCase(
+        customizations.headingLevel2.typography.letterCase ||
+          DEFAULT_SETTINGS.customizations.headingLevel2.typography.letterCase
+      );
+      setH2TSize(
+        customizations.headingLevel2.typography.size ||
+          DEFAULT_SETTINGS.customizations.headingLevel2.typography.size
+      );
+      setH2TWeight(
+        customizations.headingLevel2.typography.weight ||
+          DEFAULT_SETTINGS.customizations.headingLevel2.typography.weight
+      );
+      setPBtnBG(
+        customizations.primaryButton.background ||
+          DEFAULT_SETTINGS.customizations.primaryButton.background
+      );
+      setPBtnBlockPadding(
+        customizations.primaryButton.blockPadding ||
+          DEFAULT_SETTINGS.customizations.primaryButton.blockPadding
+      );
+      setPBtnBorder(
+        customizations.primaryButton.border ||
+          DEFAULT_SETTINGS.customizations.primaryButton.border
+      );
+      setPBtnCornerRadius(
+        customizations.primaryButton.cornerRadius ||
+          DEFAULT_SETTINGS.customizations.primaryButton.cornerRadius
+      );
+      setPBtnInlinePadding(
+        customizations.primaryButton.inlinePadding ||
+          DEFAULT_SETTINGS.customizations.primaryButton.inlinePadding
+      );
+      setPBtnTFont(
+        customizations.primaryButton.typography.font ||
+          DEFAULT_SETTINGS.customizations.primaryButton.typography.font
+      );
+      setPBtnTKerning(
+        customizations.primaryButton.typography.kerning ||
+          DEFAULT_SETTINGS.customizations.primaryButton.typography.kerning
+      );
+      setPBtnTLetterCase(
+        customizations.primaryButton.typography.letterCase ||
+          DEFAULT_SETTINGS.customizations.primaryButton.typography.letterCase
+      );
+      setPBtnTSize(
+        customizations.primaryButton.typography.size ||
+          DEFAULT_SETTINGS.customizations.primaryButton.typography.size
+      );
+      setPBtnTWeight(
+        customizations.primaryButton.typography.weight ||
+          DEFAULT_SETTINGS.customizations.primaryButton.typography.weight
+      );
+      setSelectBorder(
+        customizations.select.border ||
+          DEFAULT_SETTINGS.customizations.select.border
+      );
+      setSelectTFont(
+        customizations.select.typography.font ||
+          DEFAULT_SETTINGS.customizations.select.typography.font
+      );
+      setSelectTKerning(
+        customizations.select.typography.kerning ||
+          DEFAULT_SETTINGS.customizations.select.typography.kerning
+      );
+      setSelectTLetterCase(
+        customizations.select.typography.letterCase ||
+          DEFAULT_SETTINGS.customizations.select.typography.letterCase
+      );
+      setSelectTSize(
+        customizations.select.typography.size ||
+          DEFAULT_SETTINGS.customizations.select.typography.size
+      );
+      setSelectTWeight(
+        customizations.select.typography.weight ||
+          DEFAULT_SETTINGS.customizations.select.typography.weight
+      );
+      setTextFieldBorder(
+        customizations.textField.border ||
+          DEFAULT_SETTINGS.customizations.textField.border
+      );
+      setTextFieldTFont(
+        customizations.textField.typography.font ||
+          DEFAULT_SETTINGS.customizations.textField.typography.font
+      );
+      setTextFieldTKerning(
+        customizations.textField.typography.kerning ||
+          DEFAULT_SETTINGS.customizations.textField.typography.kerning
+      );
+      setTextFieldTLetterCase(
+        customizations.textField.typography.letterCase ||
+          DEFAULT_SETTINGS.customizations.textField.typography.letterCase
+      );
+      setTextFieldTSize(
+        customizations.textField.typography.size ||
+          DEFAULT_SETTINGS.customizations.textField.typography.size
+      );
+      setTextFieldTWeight(
+        customizations.textField.typography.weight ||
+          DEFAULT_SETTINGS.customizations.textField.typography.weight
+      );
       // Design System
-      setCanvasAccent(designSystem.colorPalette.canvas.accent);
-      setCanvasBackground(designSystem.colorPalette.canvas.background);
-      setCanvasForeground(designSystem.colorPalette.canvas.foreground);
+      setCanvasAccent(
+        designSystem.colorPalette.canvas.accent ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.canvas.accent
+      );
+      setCanvasBackground(
+        designSystem.colorPalette.canvas.background ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.canvas.background
+      );
+      setCanvasForeground(
+        designSystem.colorPalette.canvas.foreground ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.canvas.foreground
+      );
 
-      setColor1Accent(designSystem.colorPalette.color1.accent);
-      setColor1Background(designSystem.colorPalette.color1.background);
-      setColor1Foreground(designSystem.colorPalette.color1.foreground);
-      setColor2Accent(designSystem.colorPalette.color2.accent);
-      setColor2Background(designSystem.colorPalette.color2.background);
-      setColor2Foreground(designSystem.colorPalette.color2.foreground);
-      setCriticalAccent(designSystem.colorPalette.critical.accent);
-      setCriticalBackground(designSystem.colorPalette.critical.background);
-      setCriticalForeground(designSystem.colorPalette.critical.foreground);
-      setInteractiveAccent(designSystem.colorPalette.interactive.accent);
+      setColor1Accent(
+        designSystem.colorPalette.color1.accent ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.color1.accent
+      );
+      setColor1Background(
+        designSystem.colorPalette.color1.background ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.color1.background
+      );
+      setColor1Foreground(
+        designSystem.colorPalette.color1.foreground ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.color1.foreground
+      );
+      setColor2Accent(
+        designSystem.colorPalette.color2.accent ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.color2.accent
+      );
+      setColor2Background(
+        designSystem.colorPalette.color2.background ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.color2.background
+      );
+      setColor2Foreground(
+        designSystem.colorPalette.color2.foreground ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.color2.foreground
+      );
+      setCriticalAccent(
+        designSystem.colorPalette.critical.accent ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.critical.accent
+      );
+      setCriticalBackground(
+        designSystem.colorPalette.critical.background ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.critical.background
+      );
+      setCriticalForeground(
+        designSystem.colorPalette.critical.foreground ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.critical.foreground
+      );
+      setInteractiveAccent(
+        designSystem.colorPalette.interactive.accent ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.interactive.accent
+      );
       setInteractiveBackground(
-        designSystem.colorPalette.interactive.background
+        designSystem.colorPalette.interactive.background ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.interactive.background
       );
       setInteractiveForeground(
-        designSystem.colorPalette.interactive.foreground
+        designSystem.colorPalette.interactive.foreground ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.interactive.foreground
       );
-      setPrimaryAccent(designSystem.colorPalette.primary.accent);
-      setPrimaryBackground(designSystem.colorPalette.primary.background);
-      setPrimaryForeground(designSystem.colorPalette.primary.foreground);
-      setCornerRadiusIntBase(designSystem.cornerRadius.base);
-      setCornerRadiusIntLarge(designSystem.cornerRadius.large);
-      setCornerRadiusIntSmall(designSystem.cornerRadius.small);
+      setPrimaryAccent(
+        designSystem.colorPalette.primary.accent ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.primary.accent
+      );
+      setPrimaryBackground(
+        designSystem.colorPalette.primary.background ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.primary.background
+      );
+      setPrimaryForeground(
+        designSystem.colorPalette.primary.foreground ||
+          DEFAULT_SETTINGS.designSystem.colorPalette.primary.foreground
+      );
+      setCornerRadiusIntBase(
+        designSystem.cornerRadius.base ||
+          DEFAULT_SETTINGS.designSystem.cornerRadius.base
+      );
+      setCornerRadiusIntLarge(
+        designSystem.cornerRadius.large ||
+          DEFAULT_SETTINGS.designSystem.cornerRadius.large
+      );
+      setCornerRadiusIntSmall(
+        designSystem.cornerRadius.small ||
+          DEFAULT_SETTINGS.designSystem.cornerRadius.small
+      );
     }
   }, [data]);
 
   const setCheckoutSettings = async () => {
+    setLoading(true);
     const checkoutID = checkout.split("/CheckoutProfile/")[1];
     const res = await fetch(`/api/checkout-settings/${checkoutID}`, {
       method: "POST",
@@ -393,8 +544,10 @@ export default function Settings({ data, getCheckoutSettings, checkout }) {
     const json = await res.json();
     if (res.ok) {
       getCheckoutSettings();
+      setLoading(false);
       console.log(json);
     } else {
+      setLoading(false);
       console.log(json);
     }
   };
@@ -403,9 +556,10 @@ export default function Settings({ data, getCheckoutSettings, checkout }) {
     <>
       <Heading>Settings</Heading>
       {data?.checkoutBranding && (
-        <button onClick={setCheckoutSettings}>Send</button>
+        <Button onClick={setCheckoutSettings} disabled={loading}>
+          Send
+        </Button>
       )}
-
       <Layout>
         <Layout.Section>
           <Card title="CUSTOMIZATIONS" sectioned>
