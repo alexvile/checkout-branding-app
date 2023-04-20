@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useAuthenticatedFetch } from "../hooks";
 import { ColorInput } from "./ColorInput";
 
-export default function Settings({ data, checkout }) {
+export default function Settings({ data, getCheckoutSettings, checkout }) {
   const fetch = useAuthenticatedFetch();
 
   const cornerRadiusOptions = [
@@ -392,6 +392,7 @@ export default function Settings({ data, checkout }) {
     });
     const json = await res.json();
     if (res.ok) {
+      getCheckoutSettings();
       console.log(json);
     } else {
       console.log(json);

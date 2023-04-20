@@ -273,7 +273,11 @@ export default function HomePage() {
               </Card>
             )}
           </div>
-          <Settings data={settings} checkout={selected} />
+          <Settings
+            data={settings}
+            getCheckoutSettings={getCheckoutSettings}
+            checkout={selected}
+          />
         </Layout.Section>
       </Layout>
     </Page>
