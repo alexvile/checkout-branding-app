@@ -76,8 +76,8 @@ export default function Settings({
   const [orderBGImageUrl, setOrderBGImageUrl] = useState();
   const [orderBGImageID, setOrderBGImageID] = useState();
 
-  const [faviconImageUrl, setFaviconImageUrl] = useState();
-  const [faviconImageID, setFaviconImageID] = useState();
+  // const [faviconImageUrl, setFaviconImageUrl] = useState();
+  // const [faviconImageID, setFaviconImageID] = useState();
 
   const [pBtnBG, setPBtnBG] = useState();
   const [pBtnBlockPadding, setPBtnBlockPadding] = useState();
@@ -427,11 +427,11 @@ export default function Settings({
           DEFAULT_SETTINGS.customizations.orderSummary.backgroundImage
             .mediaImageId
       );
-      setFaviconImageUrl(customizations?.favicon?.image?.url || "");
-      setFaviconImageID(
-        customizations?.favicon?.image?.id ||
-          DEFAULT_SETTINGS.customizations.favicon.mediaImageId
-      );
+      // setFaviconImageUrl(customizations?.favicon?.image?.url || "");
+      // setFaviconImageID(
+      //   customizations?.favicon?.image?.id ||
+      //     DEFAULT_SETTINGS.customizations.favicon.mediaImageId
+      // );
       setPBtnBG(
         customizations.primaryButton.background ||
           DEFAULT_SETTINGS.customizations.primaryButton.background
@@ -716,6 +716,30 @@ export default function Settings({
                     width={70}
                     height={70}
                   />
+                </div>
+                <div>
+                  <Heading>Main bg image</Heading>
+                  <p>
+                    <b>Main bg image:</b>
+                    {mainBGImageUrl}
+                  </p>
+                  <p>
+                    <b>Id:</b>
+                    {mainBGImageID}
+                  </p>
+                  <img src={mainBGImageUrl} alt="1" width={70} height={70} />
+                </div>
+                <div>
+                  <Heading>order bg image</Heading>
+                  <p>
+                    <b>order bg image:</b>
+                    {orderBGImageUrl}
+                  </p>
+                  <p>
+                    <b>Id:</b>
+                    {orderBGImageID}
+                  </p>
+                  <img src={orderBGImageUrl} alt="1" width={70} height={70} />
                 </div>
                 <div>
                   <Card title="Checkbox" sectioned>
