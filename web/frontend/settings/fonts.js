@@ -7,5 +7,4 @@ export const SHOPIFY_FONTS = [
   { label: "Alegreya", value: "Alegreya" },
   { label: "Akko", value: "Akko" },
   { label: "Asul", value: "Asul" },
-  { label: "-apple-system", value: "-apple-system" },
 ];

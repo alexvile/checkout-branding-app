@@ -1,3 +1,7 @@
+// const defImgGID = "gid://shopify/ImageSource/33689932398907";
+// const defImgGID = "gid://shopify/MediaImage/33775004942651";
+const defImgGID = null;
+
 export const DEFAULT_SETTINGS = {
   customizations: {
     checkbox: {
@@ -22,11 +26,11 @@ export const DEFAULT_SETTINGS = {
     header: {
       alignment: "START",
       banner: {
-        mediaImageId: null,
+        mediaImageId: defImgGID,
       },
       logo: {
         image: {
-          mediaImageId: null,
+          mediaImageId: defImgGID,
         },
         maxWidth: null,
       },
@@ -53,13 +57,13 @@ export const DEFAULT_SETTINGS = {
     headingLevel3: {},
     main: {
       backgroundImage: {
-        mediaImageId: null,
+        mediaImageId: defImgGID,
       },
     },
     merchandiseThumbnail: {},
     orderSummary: {
       backgroundImage: {
-        mediaImageId: null,
+        mediaImageId: defImgGID,
       },
     },
     primaryButton: {
@@ -139,16 +143,16 @@ export const DEFAULT_SETTINGS = {
     typography: {
       primary: {
         shopifyFontGroup: {
-          baseWeight: 400,
-          boldWeight: 600,
-          name: "-apple-system",
+          baseWeight: 300,
+          boldWeight: 700,
+          name: "Agmena",
         },
       },
       secondary: {
         shopifyFontGroup: {
           baseWeight: 400,
-          boldWeight: 700,
-          name: "-apple-system",
+          boldWeight: 900,
+          name: "Alegreya",
         },
       },
       size: {

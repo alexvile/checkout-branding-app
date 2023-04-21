@@ -11,7 +11,7 @@ import { useAuthenticatedFetch } from "../hooks";
 import { ColorInput } from "./ColorInput";
 import { OPTIONS } from "../settings/options";
 import { DEFAULT_SETTINGS } from "../settings/default.settings";
-
+// import ImageUploader from "../components/ImageUploader";
 import { SHOPIFY_FONTS } from "../settings/fonts";
 export default function Settings({
   data,
@@ -52,6 +52,12 @@ export default function Settings({
   const [headerAlignment, setHeaderAlignment] = useState();
   const [headerPosition, setHeaderPosition] = useState();
 
+  const [headerLogoImageUrl, setHeaderLogoImageUrl] = useState();
+  const [headerLogoImageID, setHeaderLogoImageID] = useState();
+
+  const [headerBannerImageUrl, setHeaderBannerImageUrl] = useState();
+  const [headerBannerImageID, setHeaderBannerImageID] = useState();
+
   const [h1TFont, setH1TFont] = useState();
   const [h1TKerning, setH1TKerning] = useState();
   const [h1TLetterCase, setH1TLetterCase] = useState();
@@ -63,6 +69,15 @@ export default function Settings({
   const [h2TLetterCase, setH2TLetterCase] = useState();
   const [h2TSize, setH2TSize] = useState();
   const [h2TWeight, setH2TWeight] = useState();
+
+  const [mainBGImageUrl, setMainBGImageUrl] = useState();
+  const [mainBGImageID, setMainBGImageID] = useState();
+
+  const [orderBGImageUrl, setOrderBGImageUrl] = useState();
+  const [orderBGImageID, setOrderBGImageID] = useState();
+
+  const [faviconImageUrl, setFaviconImageUrl] = useState();
+  const [faviconImageID, setFaviconImageID] = useState();
 
   const [pBtnBG, setPBtnBG] = useState();
   const [pBtnBlockPadding, setPBtnBlockPadding] = useState();
@@ -154,7 +169,7 @@ export default function Settings({
       header: {
         alignment: headerAlignment,
         banner: {
-          mediaImageId: null,
+          mediaImageId: headerBannerImageID,
         },
         logo: {
           image: {
@@ -296,7 +311,7 @@ export default function Settings({
     if (!data) {
       return;
     } else {
-      const { customizations, designSystem } = data.checkoutBranding;
+      const { customizations, designSystem } = data?.checkoutBranding;
       console.log(designSystem);
       console.log(customizations);
       seCheckboxCornerRadius(
@@ -338,6 +353,16 @@ export default function Settings({
       setHeaderPosition(
         customizations.header.position ||
           DEFAULT_SETTINGS.customizations.header.position
+      );
+      setHeaderLogoImageUrl(customizations.header?.logo?.image?.url || "");
+      setHeaderLogoImageID(
+        customizations.header?.logo?.image?.id ||
+          DEFAULT_SETTINGS.customizations.header.logo.image.mediaImageId
+      );
+      setHeaderBannerImageUrl(customizations.header?.banner?.image?.url || "");
+      setHeaderBannerImageID(
+        customizations.header?.banner?.image?.id ||
+          DEFAULT_SETTINGS.customizations.header.logo.image.mediaImageId
       );
       setH1TFont(
         customizations.headingLevel1.typography.font ||
@@ -386,6 +411,26 @@ export default function Settings({
       setH2TWeight(
         customizations.headingLevel2.typography.weight ||
           DEFAULT_SETTINGS.customizations.headingLevel2.typography.weight
+      );
+      setMainBGImageUrl(
+        customizations?.main?.backgroundImage?.image?.url || ""
+      );
+      setMainBGImageID(
+        customizations?.main?.backgroundImage?.image?.id ||
+          DEFAULT_SETTINGS.customizations.main.backgroundImage.mediaImageId
+      );
+      setOrderBGImageUrl(
+        customizations?.orderSummary?.backgroundImage?.image?.url || ""
+      );
+      setOrderBGImageID(
+        customizations?.orderSummary?.backgroundImage?.image?.id ||
+          DEFAULT_SETTINGS.customizations.orderSummary.backgroundImage
+            .mediaImageId
+      );
+      setFaviconImageUrl(customizations?.favicon?.image?.url || "");
+      setFaviconImageID(
+        customizations?.favicon?.image?.id ||
+          DEFAULT_SETTINGS.customizations.favicon.mediaImageId
       );
       setPBtnBG(
         customizations.primaryButton.background ||
@@ -634,296 +679,334 @@ export default function Settings({
       )}
       <Layout>
         <Layout.Section>
-          <Card title="CUSTOMIZATIONS" sectioned>
+          <div title="CUSTOMIZATIONS" sectioned>
+            <Heading>CUSTOMIZATIONS</Heading>
             {data?.checkoutBranding?.customizations && (
               <div>
-                <Card title="Checkbox" sectioned>
-                  <Select
-                    label="Corner Radius"
-                    options={cornerRadiusOptions}
-                    onChange={(value) => seCheckboxCornerRadius(value)}
-                    value={checkboxCornerRadius}
+                <div>
+                  <Heading>Header Logo image</Heading>
+                  <p>
+                    <b>Header logo image:</b>
+                    {headerLogoImageUrl}
+                  </p>
+                  <p>
+                    <b>Id:</b>
+                    {headerLogoImageID}
+                  </p>
+                  <img
+                    src={headerLogoImageUrl}
+                    alt="1"
+                    width={70}
+                    height={70}
                   />
-                </Card>
-                <Card title="Control (Left panel)" sectioned>
-                  <Select
-                    label="Border"
-                    options={borderOptions}
-                    onChange={(value) => setControlBorder(value)}
-                    value={controlBorder}
+                </div>
+                <div>
+                  <Heading>Header BANNER image</Heading>
+                  <p>
+                    <b>image:</b>
+                    {headerBannerImageUrl}
+                  </p>
+                  <p>
+                    <b>Id:</b>
+                    {headerBannerImageID}
+                  </p>
+                  <img
+                    src={headerBannerImageUrl}
+                    alt="1"
+                    width={70}
+                    height={70}
                   />
-                  <Select
-                    label="Color"
-                    options={colorOptions}
-                    onChange={(value) => setControlColor(value)}
-                    value={controlColor}
-                  />
-                  <Select
-                    label="Corner radius"
-                    options={cornerRadiusOptions}
-                    onChange={(value) => setControlCornerRadius(value)}
-                    value={controlCornerRadius}
-                  />
-                  <Select
-                    label="Label position"
-                    options={labelPositionOptions}
-                    onChange={(value) => setLabelPosition(value)}
-                    value={labelPosition}
-                  />
-                </Card>
-                <Card title="Global" sectioned>
-                  <Select
-                    label="Corner Radius"
-                    options={cornerRadiusOptions}
-                    onChange={(value) => setGlobalCornerRadius(value)}
-                    value={globalCornerRadius}
-                  />
-
-                  <Card title="Typography" sectioned>
-                    <Select
-                      label="Kerning"
-                      options={kerningOptions}
-                      onChange={(value) => setGlobalTKerning(value)}
-                      value={globalTKerning}
-                    />
-                    <Select
-                      label="Letter Case"
-                      options={letterCaseOptions}
-                      onChange={(value) => setGlobalTLetterCase(value)}
-                      value={globalTLetterCase}
-                    />
-                  </Card>
-                </Card>
-                <Card title="Header" sectioned>
-                  <Select
-                    label="Alignment"
-                    options={alignmentOptions}
-                    onChange={(value) => setHeaderAlignment(value)}
-                    value={headerAlignment}
-                  />
-                  <Select
-                    label="Position"
-                    options={positionOptions}
-                    onChange={(value) => setHeaderPosition(value)}
-                    value={headerPosition}
-                  />
-                </Card>
-                <Card title="H1" sectioned>
-                  <Select
-                    label="Font"
-                    options={fontTypeOptions}
-                    onChange={(value) => setH1TFont(value)}
-                    value={h1TFont}
-                  />
-                  <Select
-                    label="Kerning"
-                    options={kerningOptions}
-                    onChange={(value) => setH1TKerning(value)}
-                    value={h1TKerning}
-                  />
-                  <Select
-                    label="Letter Case"
-                    options={letterCaseOptions}
-                    onChange={(value) => setH1TLetterCase(value)}
-                    value={h1TLetterCase}
-                  />
-                  <Select
-                    label="Size"
-                    options={fontSizeOptions}
-                    onChange={(value) => setH1TSize(value)}
-                    value={h1TSize}
-                  />
-                  <Select
-                    label="Weight"
-                    options={fontWeightOptions}
-                    onChange={(value) => setH1TWeight(value)}
-                    value={h1TWeight}
-                  />
-                </Card>
-                <Card title="H2" sectioned>
-                  <Select
-                    label="Font"
-                    options={fontTypeOptions}
-                    onChange={(value) => setH2TFont(value)}
-                    value={h2TFont}
-                  />
-                  <Select
-                    label="Kerning"
-                    options={kerningOptions}
-                    onChange={(value) => setH2TKerning(value)}
-                    value={h2TKerning}
-                  />
-                  <Select
-                    label="Letter Case"
-                    options={letterCaseOptions}
-                    onChange={(value) => setH2TLetterCase(value)}
-                    value={h2TLetterCase}
-                  />
-                  <Select
-                    label="Size"
-                    options={fontSizeOptions}
-                    onChange={(value) => setH2TSize(value)}
-                    value={h2TSize}
-                  />
-                  <Select
-                    label="Weight"
-                    options={fontWeightOptions}
-                    onChange={(value) => setH2TWeight(value)}
-                    value={h2TWeight}
-                  />
-                </Card>
-                <Card title="Primary button" sectioned>
-                  <Card title="Geometry" sectioned>
-                    <Select
-                      label="Background"
-                      options={backgroundOptions}
-                      onChange={(value) => setPBtnBG(value)}
-                      value={pBtnBG}
-                    />
-                    <Select
-                      label="Block Padding (Vertical)"
-                      options={paddingOptions}
-                      onChange={(value) => setPBtnBlockPadding(value)}
-                      value={pBtnBlockPadding}
-                    />
-                    <Select
-                      label="Inline Padding (Horizontal)"
-                      options={paddingOptions}
-                      onChange={(value) => setPBtnInlinePadding(value)}
-                      value={pBtnInlinePadding}
-                    />
-                    <Select
-                      label="Border"
-                      options={borderOptions}
-                      onChange={(value) => setPBtnBorder(value)}
-                      value={pBtnBorder}
-                    />
+                </div>
+                <div>
+                  <Card title="Checkbox" sectioned>
                     <Select
                       label="Corner Radius"
                       options={cornerRadiusOptions}
-                      onChange={(value) => setPBtnCornerRadius(value)}
-                      value={pBtnCornerRadius}
+                      onChange={(value) => seCheckboxCornerRadius(value)}
+                      value={checkboxCornerRadius}
                     />
                   </Card>
-                  <Card title="Typography" sectioned>
+                  <Card title="Control (Left panel)" sectioned>
+                    <Select
+                      label="Border"
+                      options={borderOptions}
+                      onChange={(value) => setControlBorder(value)}
+                      value={controlBorder}
+                    />
+                    <Select
+                      label="Color"
+                      options={colorOptions}
+                      onChange={(value) => setControlColor(value)}
+                      value={controlColor}
+                    />
+                    <Select
+                      label="Corner radius"
+                      options={cornerRadiusOptions}
+                      onChange={(value) => setControlCornerRadius(value)}
+                      value={controlCornerRadius}
+                    />
+                    <Select
+                      label="Label position"
+                      options={labelPositionOptions}
+                      onChange={(value) => setLabelPosition(value)}
+                      value={labelPosition}
+                    />
+                  </Card>
+                  <Card title="Global" sectioned>
+                    <Select
+                      label="Corner Radius"
+                      options={cornerRadiusOptions}
+                      onChange={(value) => setGlobalCornerRadius(value)}
+                      value={globalCornerRadius}
+                    />
+
+                    <Card title="Typography" sectioned>
+                      <Select
+                        label="Kerning"
+                        options={kerningOptions}
+                        onChange={(value) => setGlobalTKerning(value)}
+                        value={globalTKerning}
+                      />
+                      <Select
+                        label="Letter Case"
+                        options={letterCaseOptions}
+                        onChange={(value) => setGlobalTLetterCase(value)}
+                        value={globalTLetterCase}
+                      />
+                    </Card>
+                  </Card>
+                  <Card title="Header" sectioned>
+                    <Select
+                      label="Alignment"
+                      options={alignmentOptions}
+                      onChange={(value) => setHeaderAlignment(value)}
+                      value={headerAlignment}
+                    />
+                    <Select
+                      label="Position"
+                      options={positionOptions}
+                      onChange={(value) => setHeaderPosition(value)}
+                      value={headerPosition}
+                    />
+                  </Card>
+                  <Card title="H1" sectioned>
                     <Select
                       label="Font"
                       options={fontTypeOptions}
-                      onChange={(value) => setPBtnTFont(value)}
-                      value={pBtnTFont}
+                      onChange={(value) => setH1TFont(value)}
+                      value={h1TFont}
                     />
                     <Select
                       label="Kerning"
                       options={kerningOptions}
-                      onChange={(value) => setPBtnTKerning(value)}
-                      value={pBtnTKerning}
+                      onChange={(value) => setH1TKerning(value)}
+                      value={h1TKerning}
                     />
                     <Select
                       label="Letter Case"
                       options={letterCaseOptions}
-                      onChange={(value) => setPBtnTLetterCase(value)}
-                      value={pBtnTLetterCase}
+                      onChange={(value) => setH1TLetterCase(value)}
+                      value={h1TLetterCase}
                     />
                     <Select
                       label="Size"
                       options={fontSizeOptions}
-                      onChange={(value) => setPBtnTSize(value)}
-                      value={pBtnTSize}
+                      onChange={(value) => setH1TSize(value)}
+                      value={h1TSize}
                     />
                     <Select
                       label="Weight"
                       options={fontWeightOptions}
-                      onChange={(value) => setPBtnTWeight(value)}
-                      value={pBtnTWeight}
+                      onChange={(value) => setH1TWeight(value)}
+                      value={h1TWeight}
                     />
                   </Card>
-                </Card>
-                <Card title="Select" sectioned>
-                  <Select
-                    label="Border"
-                    options={borderOptions}
-                    onChange={(value) => setSelectBorder(value)}
-                    value={selectBorder}
-                  />
-                  <Card title="Typography" sectioned>
+                  <Card title="H2" sectioned>
                     <Select
                       label="Font"
                       options={fontTypeOptions}
-                      onChange={(value) => setSelectTFont(value)}
-                      value={selectTFont}
+                      onChange={(value) => setH2TFont(value)}
+                      value={h2TFont}
                     />
                     <Select
                       label="Kerning"
                       options={kerningOptions}
-                      onChange={(value) => setSelectTKerning(value)}
-                      value={selectTKerning}
+                      onChange={(value) => setH2TKerning(value)}
+                      value={h2TKerning}
                     />
                     <Select
                       label="Letter Case"
                       options={letterCaseOptions}
-                      onChange={(value) => setSelectTLetterCase(value)}
-                      value={selectTLetterCase}
+                      onChange={(value) => setH2TLetterCase(value)}
+                      value={h2TLetterCase}
                     />
                     <Select
                       label="Size"
                       options={fontSizeOptions}
-                      onChange={(value) => setSelectTSize(value)}
-                      value={selectTSize}
+                      onChange={(value) => setH2TSize(value)}
+                      value={h2TSize}
                     />
                     <Select
                       label="Weight"
                       options={fontWeightOptions}
-                      onChange={(value) => setSelectTWeight(value)}
-                      value={selectTWeight}
+                      onChange={(value) => setH2TWeight(value)}
+                      value={h2TWeight}
                     />
                   </Card>
-                </Card>
-                <Card title="Text field" sectioned>
-                  <Select
-                    label="Border"
-                    options={borderOptions}
-                    onChange={(value) => setTextFieldBorder(value)}
-                    value={textFieldBorder}
-                  />
-                  <Card title="Typography" sectioned>
-                    <Select
-                      label="Font"
-                      options={fontTypeOptions}
-                      onChange={(value) => setTextFieldTFont(value)}
-                      value={textFieldTFont}
-                    />
-                    <Select
-                      label="Kerning"
-                      options={kerningOptions}
-                      onChange={(value) => setTextFieldTKerning(value)}
-                      value={textFieldTKerning}
-                    />
-                    <Select
-                      label="Letter Case"
-                      options={letterCaseOptions}
-                      onChange={(value) => setTextFieldTLetterCase(value)}
-                      value={textFieldTLetterCase}
-                    />
-                    <Select
-                      label="Size"
-                      options={fontSizeOptions}
-                      onChange={(value) => setTextFieldTSize(value)}
-                      value={textFieldTSize}
-                    />
-                    <Select
-                      label="Weight"
-                      options={fontWeightOptions}
-                      onChange={(value) => setTextFieldTWeight(value)}
-                      value={textFieldTWeight}
-                    />
+                  <Card title="Primary button" sectioned>
+                    <Card title="Geometry" sectioned>
+                      <Select
+                        label="Background"
+                        options={backgroundOptions}
+                        onChange={(value) => setPBtnBG(value)}
+                        value={pBtnBG}
+                      />
+                      <Select
+                        label="Block Padding (Vertical)"
+                        options={paddingOptions}
+                        onChange={(value) => setPBtnBlockPadding(value)}
+                        value={pBtnBlockPadding}
+                      />
+                      <Select
+                        label="Inline Padding (Horizontal)"
+                        options={paddingOptions}
+                        onChange={(value) => setPBtnInlinePadding(value)}
+                        value={pBtnInlinePadding}
+                      />
+                      <Select
+                        label="Border"
+                        options={borderOptions}
+                        onChange={(value) => setPBtnBorder(value)}
+                        value={pBtnBorder}
+                      />
+                      <Select
+                        label="Corner Radius"
+                        options={cornerRadiusOptions}
+                        onChange={(value) => setPBtnCornerRadius(value)}
+                        value={pBtnCornerRadius}
+                      />
+                    </Card>
+                    <Card title="Typography" sectioned>
+                      <Select
+                        label="Font"
+                        options={fontTypeOptions}
+                        onChange={(value) => setPBtnTFont(value)}
+                        value={pBtnTFont}
+                      />
+                      <Select
+                        label="Kerning"
+                        options={kerningOptions}
+                        onChange={(value) => setPBtnTKerning(value)}
+                        value={pBtnTKerning}
+                      />
+                      <Select
+                        label="Letter Case"
+                        options={letterCaseOptions}
+                        onChange={(value) => setPBtnTLetterCase(value)}
+                        value={pBtnTLetterCase}
+                      />
+                      <Select
+                        label="Size"
+                        options={fontSizeOptions}
+                        onChange={(value) => setPBtnTSize(value)}
+                        value={pBtnTSize}
+                      />
+                      <Select
+                        label="Weight"
+                        options={fontWeightOptions}
+                        onChange={(value) => setPBtnTWeight(value)}
+                        value={pBtnTWeight}
+                      />
+                    </Card>
                   </Card>
-                </Card>
+                  <Card title="Select" sectioned>
+                    <Select
+                      label="Border"
+                      options={borderOptions}
+                      onChange={(value) => setSelectBorder(value)}
+                      value={selectBorder}
+                    />
+                    <Card title="Typography" sectioned>
+                      <Select
+                        label="Font"
+                        options={fontTypeOptions}
+                        onChange={(value) => setSelectTFont(value)}
+                        value={selectTFont}
+                      />
+                      <Select
+                        label="Kerning"
+                        options={kerningOptions}
+                        onChange={(value) => setSelectTKerning(value)}
+                        value={selectTKerning}
+                      />
+                      <Select
+                        label="Letter Case"
+                        options={letterCaseOptions}
+                        onChange={(value) => setSelectTLetterCase(value)}
+                        value={selectTLetterCase}
+                      />
+                      <Select
+                        label="Size"
+                        options={fontSizeOptions}
+                        onChange={(value) => setSelectTSize(value)}
+                        value={selectTSize}
+                      />
+                      <Select
+                        label="Weight"
+                        options={fontWeightOptions}
+                        onChange={(value) => setSelectTWeight(value)}
+                        value={selectTWeight}
+                      />
+                    </Card>
+                  </Card>
+                  <Card title="Text field" sectioned>
+                    <Select
+                      label="Border"
+                      options={borderOptions}
+                      onChange={(value) => setTextFieldBorder(value)}
+                      value={textFieldBorder}
+                    />
+                    <Card title="Typography" sectioned>
+                      <Select
+                        label="Font"
+                        options={fontTypeOptions}
+                        onChange={(value) => setTextFieldTFont(value)}
+                        value={textFieldTFont}
+                      />
+                      <Select
+                        label="Kerning"
+                        options={kerningOptions}
+                        onChange={(value) => setTextFieldTKerning(value)}
+                        value={textFieldTKerning}
+                      />
+                      <Select
+                        label="Letter Case"
+                        options={letterCaseOptions}
+                        onChange={(value) => setTextFieldTLetterCase(value)}
+                        value={textFieldTLetterCase}
+                      />
+                      <Select
+                        label="Size"
+                        options={fontSizeOptions}
+                        onChange={(value) => setTextFieldTSize(value)}
+                        value={textFieldTSize}
+                      />
+                      <Select
+                        label="Weight"
+                        options={fontWeightOptions}
+                        onChange={(value) => setTextFieldTWeight(value)}
+                        value={textFieldTWeight}
+                      />
+                    </Card>
+                  </Card>
+                </div>
               </div>
             )}
-          </Card>
+          </div>
         </Layout.Section>
         <Layout.Section secondary>
-          <Card title="DESIGN SYSTEM" sectioned>
+          <div title="DESIGN SYSTEM" sectioned>
+            <Heading>DESIGN SYSTEM</Heading>
             {data?.checkoutBranding?.designSystem && (
               <div>
                 <Heading>Color palette</Heading>
@@ -1204,7 +1287,7 @@ export default function Settings({
                 </Card>
               </div>
             )}
-          </Card>
+          </div>
         </Layout.Section>
       </Layout>
     </>
