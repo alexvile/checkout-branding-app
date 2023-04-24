@@ -35,9 +35,9 @@ export const OPTIONS = {
     { label: "End", value: "END" },
   ],
   positionOptions: [
-    { label: "Inline", value: "INLINE" },
-    { label: "Inline secondary", value: "INLINE_SECONDARY" },
-    { label: "Start", value: "START" },
+    { label: "Control panel", value: "INLINE" },
+    { label: "Order summary", value: "INLINE_SECONDARY" },
+    { label: "Full width (top)", value: "START" },
   ],
   fontTypeOptions: [
     { label: "Primary", value: "PRIMARY" },

@@ -1,5 +1,8 @@
 // const defImgGID = "gid://shopify/ImageSource/33689932398907";
 // const defImgGID = "gid://shopify/MediaImage/33775004942651";
+
+// the same gid://shopify/ImageSource/33784757584187 is
+// gid://shopify/MediaImage/33775004942651
 const defImgGID = null;
 
 export const DEFAULT_SETTINGS = {
@@ -54,7 +57,15 @@ export const DEFAULT_SETTINGS = {
         weight: "BOLD",
       },
     },
-    headingLevel3: {},
+    headingLevel3: {
+      typography: {
+        font: "SECONDARY",
+        kerning: "BASE",
+        letterCase: "NONE",
+        size: "BASE",
+        weight: "BOLD",
+      },
+    },
     main: {
       backgroundImage: {
         mediaImageId: defImgGID,
@@ -80,7 +91,20 @@ export const DEFAULT_SETTINGS = {
         weight: "BASE",
       },
     },
-    secondaryButton: {},
+    secondaryButton: {
+      background: "SOLID",
+      blockPadding: "BASE",
+      border: "NONE",
+      cornerRadius: "BASE",
+      inlinePadding: "BASE",
+      typography: {
+        font: "PRIMARY",
+        kerning: "BASE",
+        letterCase: "NONE",
+        size: "BASE",
+        weight: "BASE",
+      },
+    },
     select: {
       border: "FULL",
       typography: {
