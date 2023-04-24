@@ -189,7 +189,7 @@ export default function Settings({
       header: {
         alignment: headerAlignment,
         banner: {
-          mediaImageId: headerBannerImageID,
+          mediaImageId: null,
         },
         logo: {
           image: {
@@ -251,7 +251,20 @@ export default function Settings({
           weight: pBtnTWeight,
         },
       },
-      secondaryButton: {},
+      secondaryButton: {
+        background: sBtnBG,
+        blockPadding: sBtnBlockPadding,
+        border: sBtnBorder,
+        cornerRadius: sBtnCornerRadius,
+        inlinePadding: sBtnInlinePadding,
+        typography: {
+          font: sBtnTFont,
+          kerning: sBtnTKerning,
+          letterCase: sBtnTLetterCase,
+          size: sBtnTSize,
+          weight: sBtnTWeight,
+        },
+      },
       select: {
         border: selectBorder,
         typography: {
@@ -742,6 +755,7 @@ export default function Settings({
   }, [data]);
 
   const setCheckoutSettings = async () => {
+    console.log("values", values);
     setLoading(true);
     const checkoutID = checkout.split("/CheckoutProfile/")[1];
     const res = await fetch(`/api/checkout-settings/${checkoutID}`, {

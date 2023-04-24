@@ -140,6 +140,10 @@ const GET_CHECKOUT_SETTINGS = `#graphql
           }
         }
       }
+        userErrors {
+        field
+        message
+      }
     }
   }
 
