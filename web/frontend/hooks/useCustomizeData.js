@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useAuthenticatedFetch } from "./useAuthenticatedFetch";
 import { DEFAULT_SETTINGS } from "../settings/default.settings";
 
-function useConfig() {
+function useConfig(data) {
   const [checkboxCornerRadius, seCheckboxCornerRadius] = useState();
 
   const [controlBorder, setControlBorder] = useState();
@@ -758,7 +758,7 @@ function useConfig() {
   };
 }
 
-function useCheckouts() {
+export function useCustomizeData() {
   const [loading, setLoading] = useState(false);
   const fetch = useAuthenticatedFetch();
 
@@ -785,8 +785,8 @@ function useCheckouts() {
   };
 
   const getCheckoutSettings = async () => {
-    setLoading(true);
     const checkoutID = selected.split("/CheckoutProfile/")[1];
+    setLoading(true);
     const res = await fetch(`/api/checkout-settings/${checkoutID}`);
     const json = await res.json();
     if (res.ok) {
@@ -812,6 +812,316 @@ function useCheckouts() {
     }
   }, [selected]);
 
+  const configsAndMethods = useConfig(settings);
+  const {
+    checkboxCornerRadius,
+    controlBorder,
+    controlColor,
+    controlCornerRadius,
+    labelPosition,
+    globalCornerRadius,
+    globalTKerning,
+    globalTLetterCase,
+    headerAlignment,
+    headerPosition,
+    h1TFont,
+    h1TKerning,
+    h1TLetterCase,
+    h1TSize,
+    h1TWeight,
+    h2TFont,
+    h2TKerning,
+    h2TLetterCase,
+    h2TSize,
+    h2TWeight,
+    h3TFont,
+    h3TKerning,
+    h3TLetterCase,
+    h3TSize,
+    h3TWeight,
+    pBtnBG,
+    pBtnBlockPadding,
+    pBtnBorder,
+    pBtnCornerRadius,
+    pBtnInlinePadding,
+    pBtnTFont,
+    pBtnTKerning,
+    pBtnTLetterCase,
+    pBtnTSize,
+    pBtnTWeight,
+    sBtnBG,
+    sBtnBlockPadding,
+    sBtnBorder,
+    sBtnCornerRadius,
+    sBtnInlinePadding,
+    sBtnTFont,
+    sBtnTKerning,
+    sBtnTLetterCase,
+    sBtnTSize,
+    sBtnTWeight,
+    selectBorder,
+    selectTFont,
+    selectTKerning,
+    selectTLetterCase,
+    selectTSize,
+    selectTWeight,
+    textFieldBorder,
+    textFieldTFont,
+    textFieldTKerning,
+    textFieldTWeight,
+    textFieldTLetterCase,
+    textFieldTSize,
+    canvasAccent,
+    canvasBackground,
+    canvasForeground,
+    color1Accent,
+    color1Background,
+    color1Foreground,
+    color2Accent,
+    color2Background,
+    color2Foreground,
+    criticalAccent,
+    criticalBackground,
+    criticalForeground,
+    interactiveAccent,
+    interactiveBackground,
+    interactiveForeground,
+    primaryAccent,
+    primaryBackground,
+    primaryForeground,
+    cornerRadiusIntSmall,
+    cornerRadiusIntBase,
+    cornerRadiusIntLarge,
+    tPrimaryWeightBase,
+    tPrimaryWeightBold,
+    tPrimaryFont,
+    tSecondaryWeightBase,
+    tSecondaryWeightBold,
+    tSecondaryFont,
+    tSizeBase,
+    tSizeRatio,
+  } = configsAndMethods;
+
+  const values = {
+    customizations: {
+      checkbox: {
+        cornerRadius: checkboxCornerRadius,
+      },
+      control: {
+        border: controlBorder,
+        color: controlColor,
+        cornerRadius: controlCornerRadius,
+        labelPosition: labelPosition,
+      },
+      favicon: {
+        mediaImageId: null,
+      },
+      global: {
+        cornerRadius: globalCornerRadius,
+        typography: {
+          kerning: globalTKerning,
+          letterCase: globalTLetterCase,
+        },
+      },
+      header: {
+        alignment: headerAlignment,
+        banner: {
+          mediaImageId: null,
+        },
+        logo: {
+          image: {
+            mediaImageId: null,
+          },
+          maxWidth: null,
+        },
+        position: headerPosition,
+      },
+      headingLevel1: {
+        typography: {
+          font: h1TFont,
+          kerning: h1TKerning,
+          letterCase: h1TLetterCase,
+          size: h1TSize,
+          weight: h1TWeight,
+        },
+      },
+      headingLevel2: {
+        typography: {
+          font: h2TFont,
+          kerning: h2TKerning,
+          letterCase: h2TLetterCase,
+          size: h2TSize,
+          weight: h2TWeight,
+        },
+      },
+      headingLevel3: {
+        typography: {
+          font: h3TFont,
+          kerning: h3TKerning,
+          letterCase: h3TLetterCase,
+          size: h3TSize,
+          weight: h3TWeight,
+        },
+      },
+      main: {
+        backgroundImage: {
+          mediaImageId: null,
+        },
+      },
+      merchandiseThumbnail: {},
+      orderSummary: {
+        backgroundImage: {
+          mediaImageId: null,
+        },
+      },
+      primaryButton: {
+        background: pBtnBG,
+        blockPadding: pBtnBlockPadding,
+        border: pBtnBorder,
+        cornerRadius: pBtnCornerRadius,
+        inlinePadding: pBtnInlinePadding,
+        typography: {
+          font: pBtnTFont,
+          kerning: pBtnTKerning,
+          letterCase: pBtnTLetterCase,
+          size: pBtnTSize,
+          weight: pBtnTWeight,
+        },
+      },
+      secondaryButton: {
+        background: sBtnBG,
+        blockPadding: sBtnBlockPadding,
+        border: sBtnBorder,
+        cornerRadius: sBtnCornerRadius,
+        inlinePadding: sBtnInlinePadding,
+        typography: {
+          font: sBtnTFont,
+          kerning: sBtnTKerning,
+          letterCase: sBtnTLetterCase,
+          size: sBtnTSize,
+          weight: sBtnTWeight,
+        },
+      },
+      select: {
+        border: selectBorder,
+        typography: {
+          font: selectTFont,
+          kerning: selectTKerning,
+          letterCase: selectTLetterCase,
+          size: selectTSize,
+          weight: selectTWeight,
+        },
+      },
+      textField: {
+        border: textFieldBorder,
+        typography: {
+          font: textFieldTFont,
+          kerning: textFieldTKerning,
+          weight: textFieldTWeight,
+          letterCase: textFieldTLetterCase,
+          size: textFieldTSize,
+        },
+      },
+    },
+    designSystem: {
+      colorPalette: {
+        canvas: {
+          accent: canvasAccent,
+          background: canvasBackground,
+          foreground: canvasForeground,
+        },
+        color1: {
+          accent: color1Accent,
+          background: color1Background,
+          foreground: color1Foreground,
+        },
+        color2: {
+          accent: color2Accent,
+          background: color2Background,
+          foreground: color2Foreground,
+        },
+        critical: {
+          accent: criticalAccent,
+          background: criticalBackground,
+          foreground: criticalForeground,
+        },
+        interactive: {
+          accent: interactiveAccent,
+          background: interactiveBackground,
+          foreground: interactiveForeground,
+        },
+        primary: {
+          accent: primaryAccent,
+          background: primaryBackground,
+          foreground: primaryForeground,
+        },
+      },
+      cornerRadius: {
+        small: cornerRadiusIntSmall,
+        base: cornerRadiusIntBase,
+        large: cornerRadiusIntLarge,
+      },
+      typography: {
+        primary: {
+          shopifyFontGroup: {
+            baseWeight: tPrimaryWeightBase,
+            boldWeight: tPrimaryWeightBold,
+            name: tPrimaryFont,
+          },
+        },
+        secondary: {
+          shopifyFontGroup: {
+            baseWeight: tSecondaryWeightBase,
+            boldWeight: tSecondaryWeightBold,
+            name: tSecondaryFont,
+          },
+        },
+        size: {
+          base: tSizeBase,
+          ratio: tSizeRatio,
+        },
+      },
+    },
+  };
+
+  const setCheckoutSettings = async () => {
+    const checkoutID = selected.split("/CheckoutProfile/")[1];
+    console.log("values", values);
+    setLoading(true);
+    const res = await fetch(`/api/checkout-settings/${checkoutID}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    const json = await res.json();
+    if (res.ok) {
+      setLoading(false);
+      console.log("res", json);
+    } else {
+      setLoading(false);
+      console.log(json);
+    }
+  };
+  const setDefaultCheckoutSettings = async () => {
+    setLoading(true);
+    const res = await fetch(`/api/checkout-settings/${checkoutID}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(DEFAULT_SETTINGS),
+    });
+    const json = await res.json();
+    if (res.ok) {
+      setSettings(json.updatedSettings.data.checkoutBrandingUpsert);
+      setLoading(false);
+    } else {
+      console.log("error", json);
+      setLoading(false);
+    }
+  };
   return {
     handleSelectChange,
     selected,
@@ -822,344 +1132,8 @@ function useCheckouts() {
     setSettings,
     loading,
     setLoading,
+    setDefaultCheckoutSettings,
+    configsAndMethods,
+    setCheckoutSettings,
   };
-}
-
-export function useCustomizeData() {
-  const checkout = useCheckouts();
-  //   console.log(checkout);
-  //   const [settings, setSettings] = useState();
-  //   const fetch = useAuthenticatedFetch();
-  //   const [loading, setLoading] = useState(false);
-  //   const checkout = useCheckouts();
-  //   const { selected, setSelected, checkouts, setCheckouts } = checkout;
-  //   useEffect(() => {
-  //     if (selected) {
-  //       getCheckoutSettings();
-  //     }
-  //   }, [selected]);
-  //   const getCheckoutSettings = async () => {
-  //     setLoading(true);
-  //     const checkoutID = selected.split("/CheckoutProfile/")[1];
-  //     const res = await fetch(`/api/checkout-settings/${checkoutID}`);
-  //     const json = await res.json();
-  //     if (res.ok) {
-  //       setSettings(json.settings.data);
-  //       setLoading(false);
-  //     } else {
-  //       setLoading(false);
-  //       console.log("error", json);
-  //     }
-  //   };
-  //   const configs = useConfig(data);
-  //   const {
-  //     checkboxCornerRadius,
-  //     controlBorder,
-  //     controlColor,
-  //     controlCornerRadius,
-  //     labelPosition,
-  //     globalCornerRadius,
-  //     globalTKerning,
-  //     globalTLetterCase,
-  //     headerAlignment,
-  //     headerPosition,
-  //     h1TFont,
-  //     h1TKerning,
-  //     h1TLetterCase,
-  //     h1TSize,
-  //     h1TWeight,
-  //     h2TFont,
-  //     h2TKerning,
-  //     h2TLetterCase,
-  //     h2TSize,
-  //     h2TWeight,
-  //     h3TFont,
-  //     h3TKerning,
-  //     h3TLetterCase,
-  //     h3TSize,
-  //     h3TWeight,
-  //     pBtnBG,
-  //     pBtnBlockPadding,
-  //     pBtnBorder,
-  //     pBtnCornerRadius,
-  //     pBtnInlinePadding,
-  //     pBtnTFont,
-  //     pBtnTKerning,
-  //     pBtnTLetterCase,
-  //     pBtnTSize,
-  //     pBtnTWeight,
-  //     sBtnBG,
-  //     sBtnBlockPadding,
-  //     sBtnBorder,
-  //     sBtnCornerRadius,
-  //     sBtnInlinePadding,
-  //     sBtnTFont,
-  //     sBtnTKerning,
-  //     sBtnTLetterCase,
-  //     sBtnTSize,
-  //     sBtnTWeight,
-  //     selectBorder,
-  //     selectTFont,
-  //     selectTKerning,
-  //     selectTLetterCase,
-  //     selectTSize,
-  //     selectTWeight,
-  //     textFieldBorder,
-  //     textFieldTFont,
-  //     textFieldTKerning,
-  //     textFieldTWeight,
-  //     textFieldTLetterCase,
-  //     textFieldTSize,
-  //     canvasAccent,
-  //     canvasBackground,
-  //     canvasForeground,
-  //     color1Accent,
-  //     color1Background,
-  //     color1Foreground,
-  //     color2Accent,
-  //     color2Background,
-  //     color2Foreground,
-  //     criticalAccent,
-  //     criticalBackground,
-  //     criticalForeground,
-  //     interactiveAccent,
-  //     interactiveBackground,
-  //     interactiveForeground,
-  //     primaryAccent,
-  //     primaryBackground,
-  //     primaryForeground,
-  //     cornerRadiusIntSmall,
-  //     cornerRadiusIntBase,
-  //     cornerRadiusIntLarge,
-  //     tPrimaryWeightBase,
-  //     tPrimaryWeightBold,
-  //     tPrimaryFont,
-  //     tSecondaryWeightBase,
-  //     tSecondaryWeightBold,
-  //     tSecondaryFont,
-  //     tSizeBase,
-  //     tSizeRatio,
-  //   } = configs;
-  //   const values = {
-  //     customizations: {
-  //       checkbox: {
-  //         cornerRadius: checkboxCornerRadius,
-  //       },
-  //       control: {
-  //         border: controlBorder,
-  //         color: controlColor,
-  //         cornerRadius: controlCornerRadius,
-  //         labelPosition: labelPosition,
-  //       },
-  //       favicon: {
-  //         mediaImageId: null,
-  //       },
-  //       global: {
-  //         cornerRadius: globalCornerRadius,
-  //         typography: {
-  //           kerning: globalTKerning,
-  //           letterCase: globalTLetterCase,
-  //         },
-  //       },
-  //       header: {
-  //         alignment: headerAlignment,
-  //         banner: {
-  //           mediaImageId: null,
-  //         },
-  //         logo: {
-  //           image: {
-  //             mediaImageId: null,
-  //           },
-  //           maxWidth: null,
-  //         },
-  //         position: headerPosition,
-  //       },
-  //       headingLevel1: {
-  //         typography: {
-  //           font: h1TFont,
-  //           kerning: h1TKerning,
-  //           letterCase: h1TLetterCase,
-  //           size: h1TSize,
-  //           weight: h1TWeight,
-  //         },
-  //       },
-  //       headingLevel2: {
-  //         typography: {
-  //           font: h2TFont,
-  //           kerning: h2TKerning,
-  //           letterCase: h2TLetterCase,
-  //           size: h2TSize,
-  //           weight: h2TWeight,
-  //         },
-  //       },
-  //       headingLevel3: {
-  //         typography: {
-  //           font: h3TFont,
-  //           kerning: h3TKerning,
-  //           letterCase: h3TLetterCase,
-  //           size: h3TSize,
-  //           weight: h3TWeight,
-  //         },
-  //       },
-  //       main: {
-  //         backgroundImage: {
-  //           mediaImageId: null,
-  //         },
-  //       },
-  //       merchandiseThumbnail: {},
-  //       orderSummary: {
-  //         backgroundImage: {
-  //           mediaImageId: null,
-  //         },
-  //       },
-  //       primaryButton: {
-  //         background: pBtnBG,
-  //         blockPadding: pBtnBlockPadding,
-  //         border: pBtnBorder,
-  //         cornerRadius: pBtnCornerRadius,
-  //         inlinePadding: pBtnInlinePadding,
-  //         typography: {
-  //           font: pBtnTFont,
-  //           kerning: pBtnTKerning,
-  //           letterCase: pBtnTLetterCase,
-  //           size: pBtnTSize,
-  //           weight: pBtnTWeight,
-  //         },
-  //       },
-  //       secondaryButton: {
-  //         background: sBtnBG,
-  //         blockPadding: sBtnBlockPadding,
-  //         border: sBtnBorder,
-  //         cornerRadius: sBtnCornerRadius,
-  //         inlinePadding: sBtnInlinePadding,
-  //         typography: {
-  //           font: sBtnTFont,
-  //           kerning: sBtnTKerning,
-  //           letterCase: sBtnTLetterCase,
-  //           size: sBtnTSize,
-  //           weight: sBtnTWeight,
-  //         },
-  //       },
-  //       select: {
-  //         border: selectBorder,
-  //         typography: {
-  //           font: selectTFont,
-  //           kerning: selectTKerning,
-  //           letterCase: selectTLetterCase,
-  //           size: selectTSize,
-  //           weight: selectTWeight,
-  //         },
-  //       },
-  //       textField: {
-  //         border: textFieldBorder,
-  //         typography: {
-  //           font: textFieldTFont,
-  //           kerning: textFieldTKerning,
-  //           weight: textFieldTWeight,
-  //           letterCase: textFieldTLetterCase,
-  //           size: textFieldTSize,
-  //         },
-  //       },
-  //     },
-  //     designSystem: {
-  //       colorPalette: {
-  //         canvas: {
-  //           accent: canvasAccent,
-  //           background: canvasBackground,
-  //           foreground: canvasForeground,
-  //         },
-  //         color1: {
-  //           accent: color1Accent,
-  //           background: color1Background,
-  //           foreground: color1Foreground,
-  //         },
-  //         color2: {
-  //           accent: color2Accent,
-  //           background: color2Background,
-  //           foreground: color2Foreground,
-  //         },
-  //         critical: {
-  //           accent: criticalAccent,
-  //           background: criticalBackground,
-  //           foreground: criticalForeground,
-  //         },
-  //         interactive: {
-  //           accent: interactiveAccent,
-  //           background: interactiveBackground,
-  //           foreground: interactiveForeground,
-  //         },
-  //         primary: {
-  //           accent: primaryAccent,
-  //           background: primaryBackground,
-  //           foreground: primaryForeground,
-  //         },
-  //       },
-  //       cornerRadius: {
-  //         small: cornerRadiusIntSmall,
-  //         base: cornerRadiusIntBase,
-  //         large: cornerRadiusIntLarge,
-  //       },
-  //       typography: {
-  //         primary: {
-  //           shopifyFontGroup: {
-  //             baseWeight: tPrimaryWeightBase,
-  //             boldWeight: tPrimaryWeightBold,
-  //             name: tPrimaryFont,
-  //           },
-  //         },
-  //         secondary: {
-  //           shopifyFontGroup: {
-  //             baseWeight: tSecondaryWeightBase,
-  //             boldWeight: tSecondaryWeightBold,
-  //             name: tSecondaryFont,
-  //           },
-  //         },
-  //         size: {
-  //           base: tSizeBase,
-  //           ratio: tSizeRatio,
-  //         },
-  //       },
-  //     },
-  //   };
-  //   const setCheckoutSettings = async () => {
-  //     console.log("values", values);
-  //     setLoading(true);
-  //     const checkoutID = checkout.split("/CheckoutProfile/")[1];
-  //     const res = await fetch(`/api/checkout-settings/${checkoutID}`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(values),
-  //     });
-  //     const json = await res.json();
-  //     if (res.ok) {
-  //       getCheckoutSettings();
-  //       setLoading(false);
-  //       console.log("res", json);
-  //     } else {
-  //       setLoading(false);
-  //       console.log(json);
-  //     }
-  //   };
-  //   const setDefaultCheckoutSettings = async () => {
-  //     setLoading(true);
-  //     const checkoutID = selected.split("/CheckoutProfile/")[1];
-  //     const res = await fetch(`/api/checkout-settings/${checkoutID}`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(DEFAULT_SETTINGS),
-  //     });
-  //     const json = await res.json();
-  //     if (res.ok) {
-  //       setSettings(json.updatedSettings.data.checkoutBrandingUpsert);
-  //       setLoading(false);
-  //     } else {
-  //       console.log("error", json);
-  //       setLoading(false);
-  //     }
-  //   };
-  return checkout;
 }
