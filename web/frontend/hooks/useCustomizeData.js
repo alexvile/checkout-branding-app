@@ -758,14 +758,14 @@ function useConfig(data) {
 }
 
 export function useCustomizeData() {
-  const [loading, setLoading] = useState(false);
   const fetch = useAuthenticatedFetch();
+
+  const [loading, setLoading] = useState(false);
 
   const handleSelectChange = useCallback((value) => setSelected(value), []);
   const [selected, setSelected] = useState();
   const [checkouts, setCheckouts] = useState([]);
   const [settings, setSettings] = useState();
-  const [checkoutID, setCheckoutID] = useState("");
 
   const getCheckouts = async () => {
     setLoading(true);
@@ -785,6 +785,7 @@ export function useCustomizeData() {
   };
 
   const getCheckoutSettings = async () => {
+    const checkoutID = selected.split("/CheckoutProfile/")[1];
     setLoading(true);
     const res = await fetch(`/api/checkout-settings/${checkoutID}`);
     const json = await res.json();
@@ -808,7 +809,6 @@ export function useCustomizeData() {
   useEffect(() => {
     if (selected) {
       getCheckoutSettings();
-      setCheckoutID(selected.split("/CheckoutProfile/")[1]);
     }
   }, [selected]);
 
@@ -925,13 +925,13 @@ export function useCustomizeData() {
       },
       header: {
         alignment: headerAlignment,
-        banner: {
-          mediaImageId: null,
-        },
+        // banner: {
+        //   mediaImageId: null,
+        // },
         logo: {
-          image: {
-            mediaImageId: null,
-          },
+          // image: {
+          //   mediaImageId: null,
+          // },
           maxWidth: null,
         },
         position: headerPosition,
@@ -964,15 +964,15 @@ export function useCustomizeData() {
         },
       },
       main: {
-        backgroundImage: {
-          mediaImageId: null,
-        },
+        // backgroundImage: {
+        //   mediaImageId: null,
+        // },
       },
       merchandiseThumbnail: {},
       orderSummary: {
-        backgroundImage: {
-          mediaImageId: null,
-        },
+        // backgroundImage: {
+        //   mediaImageId: null,
+        // },
       },
       primaryButton: {
         background: pBtnBG,
@@ -1086,6 +1086,8 @@ export function useCustomizeData() {
 
   const setCheckoutSettings = async () => {
     // console.log("values", values);
+    const checkoutID = selected.split("/CheckoutProfile/")[1];
+
     setLoading(true);
     const res = await fetch(`/api/checkout-settings/${checkoutID}`, {
       method: "POST",
@@ -1096,12 +1098,15 @@ export function useCustomizeData() {
     });
     const json = await res.json();
     if (res.ok) {
+      setSettings(json.updatedSettings.data.checkoutBrandingUpsert);
       setLoading(false);
     } else {
       setLoading(false);
     }
   };
+
   const setDefaultCheckoutSettings = async () => {
+    const checkoutID = selected.split("/CheckoutProfile/")[1];
     setLoading(true);
     const res = await fetch(`/api/checkout-settings/${checkoutID}`, {
       method: "POST",
