@@ -5,46 +5,22 @@ import { Select } from "@shopify/polaris";
 import { useState, useCallback, useEffect } from "react";
 import Settings from "../components/Settings";
 import { DEFAULT_SETTINGS } from "../settings/default.settings";
+import { useCustomizeData } from "../hooks";
 
 export default function HomePage() {
   const fetch = useAuthenticatedFetch();
-  const [loading, setLoading] = useState(false);
 
-  const [settings, setSettings] = useState();
-  const [checkouts, setCheckouts] = useState([]);
-  const [selected, setSelected] = useState();
-  const handleSelectChange = useCallback((value) => setSelected(value), []);
+  const data = useCustomizeData();
+  console.log("data", data);
 
-  const getCheckouts = async () => {
-    setLoading(true);
-    const res = await fetch("/api/checkouts");
-    const json = await res.json();
-    if (res.ok) {
-      const checkoutOptions = json.chekouts.map(({ id, name }) => ({
-        label: name,
-        value: id,
-      }));
-      setCheckouts(checkoutOptions);
-      setLoading(false);
-    } else {
-      console.log("error", json);
-      setLoading(false);
-    }
-  };
-
-  const getCheckoutSettings = async () => {
-    setLoading(true);
-    const checkoutID = selected.split("/CheckoutProfile/")[1];
-    const res = await fetch(`/api/checkout-settings/${checkoutID}`);
-    const json = await res.json();
-    if (res.ok) {
-      setSettings(json.settings.data);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      console.log("error", json);
-    }
-  };
+  const {
+    selected,
+    checkouts,
+    handleSelectChange,
+    settings,
+    loading,
+    setLoading,
+  } = data;
 
   const setDefaultCheckoutSettings = async () => {
     setLoading(true);
@@ -66,23 +42,29 @@ export default function HomePage() {
     }
   };
 
-  useEffect(() => {
-    getCheckouts();
-  }, []);
-
-  useEffect(() => {
-    setSelected(checkouts[2]?.value);
-  }, [checkouts]);
-
-  useEffect(() => {
-    if (selected) {
-      getCheckoutSettings();
-    }
-  }, [selected]);
-
+  const primaryAction = {
+    content: "Save",
+    disabled: loading,
+    onAction: () => {
+      console.log("send");
+    },
+  };
+  const secondaryActions = [
+    {
+      content: "Set default",
+      disabled: loading,
+      onAction: () => {
+        setDefaultCheckoutSettings();
+      },
+    },
+  ];
   return (
     <Page>
-      <TitleBar title="Checkout customizer" primaryAction={null} />
+      <TitleBar
+        title="Checkout customizer"
+        primaryAction={primaryAction}
+        secondaryActions={secondaryActions}
+      />
       <Layout>
         <Layout.Section>
           <div>
@@ -96,21 +78,12 @@ export default function HomePage() {
                   onChange={handleSelectChange}
                   value={selected}
                 />
-                <div>
-                  <Button
-                    onClick={setDefaultCheckoutSettings}
-                    disabled={loading}
-                  >
-                    Set default
-                  </Button>
-                  (WARNING)
-                </div>
               </Card>
             )}
           </div>
           <Settings
             data={settings}
-            getCheckoutSettings={getCheckoutSettings}
+            // getCheckoutSettings={getCheckoutSettings}
             loading={loading}
             setLoading={setLoading}
             checkout={selected}
