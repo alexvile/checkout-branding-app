@@ -60,6 +60,9 @@ export default function Settings({ data, configsAndMethods }) {
     headerLogoImageID,
     setHeaderLogoImageID,
 
+    headerLogoMaxW,
+    setHeaderLogoMaxW,
+
     headerBannerImageUrl,
     setHeaderBannerImageUrl,
     headerBannerImageID,
@@ -333,6 +336,18 @@ export default function Settings({ data, configsAndMethods }) {
                     url={headerLogoImageUrl}
                     title={"Header logo image"}
                   />
+                  <RangeSlider
+                    output
+                    label="Logo max width"
+                    min={0}
+                    max={1000}
+                    suffix={headerLogoMaxW}
+                    value={headerLogoMaxW || 0}
+                    onChange={(value) => {
+                      setHeaderLogoMaxW(value);
+                    }}
+                  />
+
                   <Select
                     label="Position"
                     options={positionOptions}

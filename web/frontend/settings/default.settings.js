@@ -35,7 +35,7 @@ export const DEFAULT_SETTINGS = {
         image: {
           mediaImageId: defImgGID,
         },
-        maxWidth: null,
+        maxWidth: 1000,
       },
       position: "INLINE",
     },

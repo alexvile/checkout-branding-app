@@ -21,6 +21,8 @@ function useConfig(data) {
   const [headerLogoImageUrl, setHeaderLogoImageUrl] = useState();
   const [headerLogoImageID, setHeaderLogoImageID] = useState();
 
+  const [headerLogoMaxW, setHeaderLogoMaxW] = useState();
+
   const [headerBannerImageUrl, setHeaderBannerImageUrl] = useState();
   const [headerBannerImageID, setHeaderBannerImageID] = useState();
 
@@ -179,6 +181,10 @@ function useConfig(data) {
       setHeaderLogoImageID(
         customizations?.header?.logo?.image?.id ||
           DEFAULT_SETTINGS.customizations.header.logo.image.mediaImageId
+      );
+      setHeaderLogoMaxW(
+        customizations?.header?.logo?.maxWidth ||
+          DEFAULT_SETTINGS.customizations.header.logo.maxWidth
       );
       setHeaderBannerImageUrl(customizations?.header?.banner?.image?.url || "");
       setHeaderBannerImageID(
@@ -564,6 +570,8 @@ function useConfig(data) {
     setHeaderLogoImageUrl,
     headerLogoImageID,
     setHeaderLogoImageID,
+    headerLogoMaxW,
+    setHeaderLogoMaxW,
 
     headerBannerImageUrl,
     setHeaderBannerImageUrl,
@@ -824,6 +832,7 @@ export function useCustomizeData() {
     globalTLetterCase,
     headerAlignment,
     headerPosition,
+    headerLogoMaxW,
     h1TFont,
     h1TKerning,
     h1TLetterCase,
@@ -932,7 +941,7 @@ export function useCustomizeData() {
           // image: {
           //   mediaImageId: null,
           // },
-          maxWidth: null,
+          maxWidth: headerLogoMaxW,
         },
         position: headerPosition,
       },

@@ -4,7 +4,7 @@ import noImage from "../assets/noImage.jpeg";
 export const ImagePreview = ({ url, title }) => {
   return (
     <div>
-      {title && <p>{title}</p>}
+      {title && <p className="pt-2">{title}</p>}
       {url ? (
         <Image source={url} width={100} />
       ) : (
