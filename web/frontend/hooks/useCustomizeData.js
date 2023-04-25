@@ -134,8 +134,7 @@ function useConfig(data) {
       return;
     } else {
       const { customizations, designSystem } = data?.checkoutBranding;
-      console.log("designSystem", designSystem);
-      console.log("customizations", customizations);
+      console.log("customize", data?.checkoutBranding);
       seCheckboxCornerRadius(
         customizations?.checkbox?.cornerRadius ||
           DEFAULT_SETTINGS.customizations.checkbox.cornerRadius
@@ -766,6 +765,7 @@ export function useCustomizeData() {
   const [selected, setSelected] = useState();
   const [checkouts, setCheckouts] = useState([]);
   const [settings, setSettings] = useState();
+  const [checkoutID, setCheckoutID] = useState("");
 
   const getCheckouts = async () => {
     setLoading(true);
@@ -785,7 +785,6 @@ export function useCustomizeData() {
   };
 
   const getCheckoutSettings = async () => {
-    const checkoutID = selected.split("/CheckoutProfile/")[1];
     setLoading(true);
     const res = await fetch(`/api/checkout-settings/${checkoutID}`);
     const json = await res.json();
@@ -809,6 +808,7 @@ export function useCustomizeData() {
   useEffect(() => {
     if (selected) {
       getCheckoutSettings();
+      setCheckoutID(selected.split("/CheckoutProfile/")[1]);
     }
   }, [selected]);
 
@@ -1085,8 +1085,7 @@ export function useCustomizeData() {
   };
 
   const setCheckoutSettings = async () => {
-    const checkoutID = selected.split("/CheckoutProfile/")[1];
-    console.log("values", values);
+    // console.log("values", values);
     setLoading(true);
     const res = await fetch(`/api/checkout-settings/${checkoutID}`, {
       method: "POST",
@@ -1098,10 +1097,8 @@ export function useCustomizeData() {
     const json = await res.json();
     if (res.ok) {
       setLoading(false);
-      console.log("res", json);
     } else {
       setLoading(false);
-      console.log(json);
     }
   };
   const setDefaultCheckoutSettings = async () => {
