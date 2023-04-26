@@ -6,7 +6,7 @@ import {
   RangeSlider,
   Banner,
 } from "@shopify/polaris";
-
+import { CustomCard } from "./CustomCard";
 import { ColorInput } from "./ColorInput";
 import { OPTIONS } from "../settings/options";
 // import ImageUploader from "../components/ImageUploader";
@@ -262,6 +262,17 @@ export default function Settings({ data, configsAndMethods }) {
           <div title="CUSTOMIZATIONS">
             {data?.checkoutBranding?.customizations && (
               <div>
+                <CustomCard title="Test title">
+                  <p>Hello word</p>
+                  <p>Hello word</p>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Unde, eveniet odit distinctio iusto dolore totam doloribus
+                    quisquam vitae repudiandae, et nesciunt iure asperiores
+                    optio fugiat.
+                  </p>
+                </CustomCard>
+
                 <Card title="Checkbox" sectioned>
                   <Select
                     label="Corner Radius"
