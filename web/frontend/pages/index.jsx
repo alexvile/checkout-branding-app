@@ -1,4 +1,4 @@
-import { Card, Page, Layout, Spinner } from "@shopify/polaris";
+import { Page, Layout, Spinner } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { Select } from "@shopify/polaris";
 import Settings from "../components/Settings";
@@ -47,7 +47,7 @@ export default function HomePage() {
           <div>
             {loading && <Spinner />}
             {checkouts.length > 0 && (
-              <Card sectioned>
+              <div>
                 <Select
                   disabled={loading}
                   label="Choose checkout"
@@ -55,7 +55,7 @@ export default function HomePage() {
                   onChange={handleSelectChange}
                   value={selected}
                 />
-              </Card>
+              </div>
             )}
           </div>
           <Settings

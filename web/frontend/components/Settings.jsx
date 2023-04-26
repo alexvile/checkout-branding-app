@@ -1,11 +1,12 @@
 import {
   Select,
   Layout,
-  Card,
   Heading,
   RangeSlider,
   Banner,
+  Button,
 } from "@shopify/polaris";
+import { useState } from "react";
 import { CustomCard } from "./CustomCard";
 import { ColorInput } from "./ColorInput";
 import { OPTIONS } from "../settings/options";
@@ -253,35 +254,35 @@ export default function Settings({ data, configsAndMethods }) {
     tSizeRatio,
     setTSizeRatio,
   } = configsAndMethods;
+  const [allOpen, setAllOpen] = useState(false);
+
+  const toggleAllOpen = () => {
+    setAllOpen(!allOpen);
+  };
 
   return (
     <>
-      <Heading>Settings</Heading>
+      <div className="my-4 flex justify-between items-center">
+        <Heading>Settings</Heading>
+        <Button onClick={toggleAllOpen}>
+          <span>{allOpen ? "Hide all" : "Expand all"}</span>
+        </Button>
+      </div>
+
       <Layout>
         <Layout.Section oneThird>
           <div title="CUSTOMIZATIONS">
             {data?.checkoutBranding?.customizations && (
               <div>
-                <CustomCard title="Test title">
-                  <p>Hello word</p>
-                  <p>Hello word</p>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Unde, eveniet odit distinctio iusto dolore totam doloribus
-                    quisquam vitae repudiandae, et nesciunt iure asperiores
-                    optio fugiat.
-                  </p>
-                </CustomCard>
-
-                <Card title="Checkbox" sectioned>
+                <CustomCard allOpen={allOpen} title="Checkbox">
                   <Select
                     label="Corner Radius"
                     options={cornerRadiusOptions}
                     onChange={(value) => seCheckboxCornerRadius(value)}
                     value={checkboxCornerRadius}
                   />
-                </Card>
-                <Card title="Control (Left panel)" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="Control">
                   <Select
                     label="Border"
                     options={borderOptions}
@@ -306,8 +307,8 @@ export default function Settings({ data, configsAndMethods }) {
                     onChange={(value) => setLabelPosition(value)}
                     value={labelPosition}
                   />
-                </Card>
-                <Card title="Global" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="Global">
                   <Select
                     label="Corner Radius"
                     options={cornerRadiusOptions}
@@ -315,7 +316,7 @@ export default function Settings({ data, configsAndMethods }) {
                     value={globalCornerRadius}
                   />
 
-                  <div className="pt-5" title="Typography" sectioned>
+                  <div className="pt-5" title="Typography">
                     <Heading>Typography</Heading>
                     <Select
                       label="Kerning"
@@ -330,8 +331,8 @@ export default function Settings({ data, configsAndMethods }) {
                       value={globalTLetterCase}
                     />
                   </div>
-                </Card>
-                <Card title="Header" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="Header">
                   <Select
                     label="Alignment"
                     options={alignmentOptions}
@@ -365,8 +366,8 @@ export default function Settings({ data, configsAndMethods }) {
                     onChange={(value) => setHeaderPosition(value)}
                     value={headerPosition}
                   />
-                </Card>
-                <Card title="H1" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="H1">
                   <Select
                     label="Font"
                     options={fontTypeOptions}
@@ -397,8 +398,8 @@ export default function Settings({ data, configsAndMethods }) {
                     onChange={(value) => setH1TWeight(value)}
                     value={h1TWeight}
                   />
-                </Card>
-                <Card title="H2" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="H2">
                   <Select
                     label="Font"
                     options={fontTypeOptions}
@@ -429,8 +430,8 @@ export default function Settings({ data, configsAndMethods }) {
                     onChange={(value) => setH2TWeight(value)}
                     value={h2TWeight}
                   />
-                </Card>
-                <Card title="H3" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="H3">
                   <Select
                     label="Font"
                     options={fontTypeOptions}
@@ -461,13 +462,13 @@ export default function Settings({ data, configsAndMethods }) {
                     onChange={(value) => setH3TWeight(value)}
                     value={h3TWeight}
                   />
-                </Card>
-                <Card title="Main background image" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="Main background image">
                   <ImagePreview url={mainBGImageUrl} />
-                </Card>
-                <Card title="Order background image" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="Order background image">
                   <ImagePreview url={orderBGImageUrl} />
-                </Card>
+                </CustomCard>
               </div>
             )}
           </div>
@@ -476,8 +477,8 @@ export default function Settings({ data, configsAndMethods }) {
           <div title="CUSTOMIZATIONS2">
             {data?.checkoutBranding?.customizations && (
               <div>
-                <Card title="Primary button" sectioned>
-                  <div title="Geometry" sectioned>
+                <CustomCard allOpen={allOpen} title="Primary button">
+                  <div title="Geometry">
                     <Heading>Geometry</Heading>
                     <Select
                       label="Background"
@@ -510,7 +511,7 @@ export default function Settings({ data, configsAndMethods }) {
                       value={pBtnCornerRadius}
                     />
                   </div>
-                  <div className="pt-5" title="Typography" sectioned>
+                  <div className="pt-5" title="Typography">
                     <Heading>Typography</Heading>
                     <Select
                       label="Font"
@@ -543,9 +544,9 @@ export default function Settings({ data, configsAndMethods }) {
                       value={pBtnTWeight}
                     />
                   </div>
-                </Card>
-                <Card title="Secondary button" sectioned>
-                  <div title="Geometry" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="Secondary button">
+                  <div title="Geometry">
                     <Heading>Geometry</Heading>
                     <Select
                       label="Background"
@@ -578,7 +579,7 @@ export default function Settings({ data, configsAndMethods }) {
                       value={sBtnCornerRadius}
                     />
                   </div>
-                  <div className="pt-5" title="Typography" sectioned>
+                  <div className="pt-5" title="Typography">
                     <Heading>Typography</Heading>
                     <Select
                       label="Font"
@@ -611,15 +612,15 @@ export default function Settings({ data, configsAndMethods }) {
                       value={sBtnTWeight}
                     />
                   </div>
-                </Card>
-                <Card title="Select" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="Select">
                   <Select
                     label="Border"
                     options={borderOptions}
                     onChange={(value) => setSelectBorder(value)}
                     value={selectBorder}
                   />
-                  <div className="pt-5" title="Typography" sectioned>
+                  <div className="pt-5" title="Typography">
                     <Heading>Typography</Heading>
                     <Select
                       label="Font"
@@ -652,15 +653,15 @@ export default function Settings({ data, configsAndMethods }) {
                       value={selectTWeight}
                     />
                   </div>
-                </Card>
-                <Card title="Text field" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="Text field">
                   <Select
                     label="Border"
                     options={borderOptions}
                     onChange={(value) => setTextFieldBorder(value)}
                     value={textFieldBorder}
                   />
-                  <div className="pt-5" title="Typography" sectioned>
+                  <div className="pt-5" title="Typography">
                     <Heading>Typography</Heading>
                     <Select
                       label="Font"
@@ -693,7 +694,7 @@ export default function Settings({ data, configsAndMethods }) {
                       value={textFieldTWeight}
                     />
                   </div>
-                </Card>
+                </CustomCard>
               </div>
             )}
           </div>
@@ -703,7 +704,7 @@ export default function Settings({ data, configsAndMethods }) {
           <div title="DESIGN SYSTEM">
             {data?.checkoutBranding?.designSystem && (
               <div>
-                <Card title="Color palette" sectioned>
+                <CustomCard allOpen={allOpen} title="Color palette">
                   <div title="Canvas" className="pb-5">
                     <Heading>Canvas</Heading>
 
@@ -849,9 +850,8 @@ export default function Settings({ data, configsAndMethods }) {
                       value={primaryForeground}
                     />
                   </div>
-                </Card>
-
-                <Card title="Corner radius" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="Corner radius">
                   <RangeSlider
                     output
                     label="Base"
@@ -885,9 +885,8 @@ export default function Settings({ data, configsAndMethods }) {
                       setCornerRadiusIntSmall(value);
                     }}
                   />
-                </Card>
-
-                <Card title="Typography" sectioned>
+                </CustomCard>
+                <CustomCard allOpen={allOpen} title="Typography">
                   <div className="pb-5">
                     <Banner status="warning">
                       <p>
@@ -997,7 +996,7 @@ export default function Settings({ data, configsAndMethods }) {
                       }}
                     />
                   </div>
-                </Card>
+                </CustomCard>
               </div>
             )}
           </div>
