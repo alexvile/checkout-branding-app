@@ -169,14 +169,14 @@ export const DEFAULT_SETTINGS = {
         shopifyFontGroup: {
           baseWeight: 300,
           boldWeight: 700,
-          name: "Agmena",
+          name: "Mono",
         },
       },
       secondary: {
         shopifyFontGroup: {
           baseWeight: 400,
           boldWeight: 900,
-          name: "Alegreya",
+          name: "Mono",
         },
       },
       size: {
@@ -186,3 +186,4 @@ export const DEFAULT_SETTINGS = {
     },
   },
 };
+// add apple fonts as default
